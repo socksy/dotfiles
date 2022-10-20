@@ -1,0 +1,27 @@
+conky.config = {
+	background = true,
+	out_to_console = true,
+	out_to_x = false,
+-- Update interval in seconds
+	update_interval = 1,
+--user_spacer left
+	pad_percents = 2,
+--lua_load ~/.xmonad/.conky_lua_scripts.lua
+
+};
+
+conky.text = [[
+^fg(\#ffee55) ^i(/home/ben/.xmonad/dzen2/spkr_01.xbm)\
+${if_match "${exec pactl list sinks | grep "Mute: yes"}" == "	Mute: yes"}^fg(\#770000)${else}^fg(\#828a8c)${endif} \
+${exec amixer get Master | egrep -o "[0-9]+%" | head -1}\
+^fg(\#ffee55) ^i(/home/ben/.xmonad/dzen2/clouds.xbm) ^fg(\#828a8c)${weather "http://tgftp.nws.noaa.gov/pub/data/observations/metar/stations/ EDDT temperature}°\
+^fg(\#ffee55) ^i(/home/ben/.xmonad/dzen2/mem.xbm) ^fg(\#828a8c)${memperc}%\
+^fg(\#ffee55) ^i(/home/ben/.xmonad/dzen2/wifi_02.xbm) ^fg(\#828a8c)${wireless_essid wlp58s0} \
+^fg(\#ffee55) ^i(/home/ben/.xmonad/dzen2/battery.xbm) \
+${if_match ${battery_percent BAT0} <= 15}^fg(\#FF0000)${else}^fg(\#828a8c)${endif}\
+${battery} \
+^fg(\#ffee55) ^ca(3,/home/ben/bin/dzen/clock.sh)^i(/home/ben/.xmonad/dzen2/clock24.xbm)^ca() ^fg(\#cdcdcd)${time %a %d %b %T %Z} \
+#^fg(\#ffee55) ^i(/home/ben/.xmonad/dzen2/arch_10x10.xbm) ^fg(\#828a8c)${exec uname -r} ^ca() \
+
+#^fg(\#ebac54) ${if_existing /proc/net/route wlp3s0} ^i(/home/ben/.xmonad/dzen2/net_wired.xbm) ${endif} ^fg(\#00aa4a) ^i(/home/ben/.xmonad/dzen2/net_down_03.xbm)${lua_parse pad %3.0f ${downspeed wlp3s0}} ^fg(\#ff3333) ^i(/home/ben/.xmonad/dzen2/net_up_03.xbm)${lua_parse pad ${upspeed wlp3s0}} ^i(/home/ben/.xmonad/dzen2/cpu.xbm) ^fg(\#FFFFFF)${lua_parse pad ${cpu}}% ^i(\#FFFFFF)${battery_percent} ^i(/home/ben/.xmonad/dzen2/mem.xbm) ^fg(\#FFFFFF)${memperc} %^fg(\#ebac54) ^i(/home/ben/.xmonad/dzen2/volume.xbm) ^fg(\#00ffff)${exec amixer get Master | egrep -o "[0-9]+%" | head -1 | egrep -o "[0-9]*"}% ^fg(\#ebac54) ^i(/home/ben/.xmonad/dzen2/clock.xbm) ^fg(\#FFFFFF) ${time %d %m %Y} ^fg(\#ebac54) ${time %T}
+]];
