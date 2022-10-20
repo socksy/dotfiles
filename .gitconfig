@@ -1,0 +1,60 @@
+[push]
+	default = upstream
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	ca = commit
+	st = status
+  tc = show-branch HEAD
+  p = push -u
+  pu = "!git push --set-upstream origin $(git symbolic-ref --short HEAD)"
+  thank = blame
+  forgot-branch = "!f() { git branch $1 && git reset --hard \"origin/`git rev-parse --abbrev-ref HEAD`\" && git pull && git checkout $1 ; }; f"
+	pushf = push --force-with-lease
+  upstream = "!git branch --set-upstream-to=origin/$(git branch --show-current)"
+  #pr = "!xdg-open \"http://github.com/$(git remote -v|sed -e '/^origin/!d' -e '/(push)$/!d' -e 's|^.*github\\.com[:/]\\([^ ]*\\)\\(\\.git |\\s\\).*$|\\1|')/pull/new/$(git rev-parse --abbrev-ref HEAD)\""
+  # Go to github webpage  =====
+[user]
+	email = ben.j.lovell@gmail.com
+	name = Ben Lovell
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false
+[merge]
+	conflictstyle = diff3
+[github]
+	user = socksy
+[pull]
+	rebase = false
+[core]
+	pager = "less -R"
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+  blame = delta
+[interactive]
+  diffFilter = delta --color-only
+[diff]
+  colorMoved = default
+[delta]
+  map-styles = bold purple => syntax magenta, bold cyan => syntax blue
+  hyperlinks = true
+[init]
+	defaultBranch = main
+[color "status"]
+	header = normal
+	added = green
+	updated = green
+	changed = magenta
+	untracked = black white
+	nobranch = red
+[color]
+	ui = auto
+[rerere]
+	enabled = true
