@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+function kitty_quake() {
+  KITTY=$(pgrep -a -f ".*kitty.*")  
+  QUAKE=$(osascript -l JavaScript -e 'Application("System Events").processes.whose({name: "kitty"}).windows.whose({name: "Quake"}).name()')
+
+  if [[ $KITTY == "" ]]; then
+
+    kitty --listen-on=unix:/tmp/kitty -o macos_quit_when_last_window_closed=no false &
+
+    while [[ $KITTY == "" ]]
+    do
+      KITTY=$(pgrep -a -f ".*kitty.*")  
+    done
+
+    kitty --listen-on=unix:/tmp/kitty --title=Quake &
+
+    while [[ $QUAKE != "Quake" ]]
+    do
+      QUAKE=$(osascript -l JavaScript -e 'Application("System Events").processes.whose({name: "kitty"}).windows.whose({name: "Quake"}).name()')
+    done
+
+    WINDOW_ID=$(GetWindowID kitty 'Quake')
+    yabai -m window $WINDOW_ID --toggle sticky
+    yabai -m window $WINDOW_ID --move abs:0:0
+    yabai -m window $WINDOW_ID --resize abs:10000:450
+    yabai -m window $WINDOW_ID --opacity 0.95
+    exit 0    
+
+  elif [[ $KITTY != "" && $QUAKE == "" ]]; then
+
+    kitty --listen-on=unix:/tmp/kitty --title=Quake &
+
+    while [[ $QUAKE != "Quake" ]]
+    do
+      QUAKE=$(osascript -l JavaScript -e 'Application("System Events").processes.whose({name: "kitty"}).windows.whose({name: "Quake"}).name()')
+    done
+
+    WINDOW_ID=$(GetWindowID kitty 'Quake')
+    yabai -m window $WINDOW_ID --toggle sticky
+    yabai -m window $WINDOW_ID --move abs:0:0
+    yabai -m window $WINDOW_ID --resize abs:10000:450
+    yabai -m window $WINDOW_ID --opacity 0.95
+
+  elif [[ $KITTY != "" && $QUAKE != "" ]]; then
+
+    WINDOW_ID=$(GetWindowID kitty 'Quake')
+    INFO=$(yabai -m query --windows --window $WINDOW_ID | jq '.border, .minimized')
+    BORDER=$(echo $INFO | awk '{print $1}')
+    MINI=$(echo $INFO | awk '{print $2}')
+
+    if [[ $MINI -eq 1 ]]; then
+
+      [[ $BORDER -eq 1 ]] && yabai -m window "$WNDOW_ID" --toggle border || :
+      yabai -m window "$WINDOW_ID" --deminimize;
+      yabai -m window "$WINDOW_ID" --opacity 0.95;
+      [[ $BORDER -eq 0 ]] && yabai -m window "$WNDOW_ID" --toggle border || :
+      yabai -m window "$WINDOW_ID" --focus "$WINDOW_ID";
+
+    elif [[ $MINI -eq 0 ]]; then
+
+      [[ $BORDER -eq 1 ]] && yabai -m window "$WINDOW_ID" --toggle border || :
+      yabai -m window "$WINDOW_ID" --opacity 0.001;
+      yabai -m window "$WINDOW_ID" --minimize;
+
+    fi
+  fi
+}
+kitty_quake

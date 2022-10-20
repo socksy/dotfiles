@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+pushd ~/.nixpkgs/
+sudo darwin-rebuild switch --flake ".#bens-mbp" $@

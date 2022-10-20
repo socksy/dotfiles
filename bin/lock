@@ -1,0 +1,13 @@
+#!/bin/sh
+fscrn=$(mktemp --tmpdir XXXX.png)
+scrot $fscrn
+#lock immediately before finish blurring
+#i3lock -c 4C544C -i $fscrn
+
+#import -window root /tmp/screenlock.png
+#convert -scale 10% -scale 1000% $fscrn $fscrn
+gm mogrify -colorspace gray -scale 10% -scale 1000% $fscrn
+#gm mogrify -colorspace gray -blur 0x10 $fscrn
+#kill $(pgrep i3lock)
+i3lock -i $fscrn
+rm $fscrn

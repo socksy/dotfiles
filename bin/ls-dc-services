@@ -1,0 +1,2 @@
+#!/bin/sh
+grep -e "^  \S*:$" docker-compose.yml | sed -r "s/  (\S+):/\1/"

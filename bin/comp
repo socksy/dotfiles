@@ -1,0 +1,2 @@
+#compton -bcCGf  -D 1  --backend glx -i 0.95 --inactive-dim 0.05 --mark-wmwin-focused -e 1.0 --paint-on-overlay --focus-exclude "(y = 0 || y = 1550) && override_redirect = true"
+picom -bcCGf  -D 1  --inactive-dim 0.05 --mark-wmwin-focused -e 1.0 --focus-exclude "(y = 0 || y = 1550) && override_redirect = true" --shadow-exclude 'argb && (override_redirect || wmwin)' --focus-exclude 'argb && (override_redirect || wmwin)' --unredir-if-possible-delay=1000 #--vsync openglmswc

@@ -1,0 +1,42 @@
+#!/usr/bin/env bb
+
+(ns lin
+  (:require
+   [babashka.curl :as curl]
+   [cheshire.core :as json]
+   [clojure.pprint :refer [pprint]]))
+  
+(def auth-token (slurp "/Users/ben/bin/.linear_token"))
+(println auth-token)
+
+
+(def graphql-query
+  "
+  { 
+    issues { 
+      nodes { 
+        id 
+        title 
+      } 
+    } 
+  }
+  ")
+
+(defn run-query [query variables]
+  (-> (curl/post "https://api.linear.app/graphql"
+                 {:raw-args ["--http1.1"]
+                  :headers {"Content-Type" "application/json"
+                            "Authorization" auth-token}
+                  :body (json/generate-string {:query query
+                                               #_#_:variables variables})})
+      :body
+      (json/parse-string true)))
+
+(defn -main []
+  (pprint
+   (run-query graphql-query
+              {:last 100})))
+
+(-main)
+#_(when (= *file* (System/getProperty "babashka.file"))
+  (-main))

@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+# stolen from https://github.com/kovidgoyal/kitty/issues/45#issuecomment-1197496655
+KITTY_APPLICATION=/Users/ben/Applications/Nix\ Apps/kitty.app
+SESSION_FILE=/Users/ben/.config/kitty/dropdown.conf
+set -x
+
+function GET_HOTKEY_WINDOW() {
+  JQ_QUERY="[ .[] | select( .app == \"kitty\") | select( .title == \"$WINDOW_NAME\")] | .[0].id"
+  POSSIBLE_WINDOW="$(yabai -m query --windows | jq "$JQ_QUERY")" 
+  if [[ "$POSSIBLE_WINDOW" == "null" ]]; then
+    echo "";
+  else
+    echo $POSSIBLE_WINDOW
+  fi
+}
+
+function kitty_quake() {
+  KITTY=$(pgrep -a -f ".*kitty.*")
+  export WINDOW_NAME="${1-dropdown}"
+  QUAKE=$(GET_HOTKEY_WINDOW)
+
+  if [[ $KITTY == "" ]]; then
+
+    open -a kitty -n --args -1 --listen-on=unix:/tmp/kitty -o macos_quit_when_last_window_closed=no false
+
+    while [[ $KITTY == "" ]]
+    do
+      KITTY=$(pgrep -a -f ".*kitty.*")
+    done
+
+    open "$KITTY_APPLICATION" -n --args --single-instance --session $SESSION_FILE --title $WINDOW_NAME --listen-on=unix:/tmp/kitty
+
+    while [[ $QUAKE == "" ]]
+    do
+      QUAKE=$(GET_HOTKEY_WINDOW)
+      echo "ooh"
+    done
+
+    WINDOW_ID=$(GET_HOTKEY_WINDOW)
+    yabai -m window $WINDOW_ID --toggle sticky
+    yabai -m window $WINDOW_ID --move abs:0:0
+    yabai -m window $WINDOW_ID --resize abs:10000:450
+    yabai -m window $WINDOW_ID --opacity 0.95
+    exit 0
+
+  elif [[ $KITTY != "" && $QUAKE == "" ]]; then
+
+    open "$KITTY_APPLICATION" -n --args --single-instance --session $SESSION_FILE --title "$WINDOW_NAME" --listen-on=unix:/tmp/kitty
+
+    while [[ $QUAKE == "" ]]
+    do
+      QUAKE=$(GET_HOTKEY_WINDOW)
+      echo "ahh"
+    done
+
+    WINDOW_ID=$(GET_HOTKEY_WINDOW)
+      echo "pff"
+    yabai -m window $WINDOW_ID --toggle sticky
+    yabai -m window $WINDOW_ID --move abs:0:0
+    yabai -m window $WINDOW_ID --resize abs:10000:450
+    yabai -m window $WINDOW_ID --opacity 0.95
+
+  elif [[ $KITTY != "" && $QUAKE != "" ]]; then
+
+    WINDOW_ID=$(GET_HOTKEY_WINDOW)
+    INFO=$(yabai -m query --windows --window $WINDOW_ID )
+    BORDER=$(echo $INFO | jq '.["border"]')
+    FOCUS=$(echo $INFO | jq '.["focused"]')
+    MINI=$(echo $INFO | jq '.["minimized"]')
+    echo $MINI
+    echo $WINDOW_ID
+    echo $BORDER
+    echo $MINI
+
+
+    if [[ $MINI == "1" ]]; then
+      echo "a"
+
+      [[ $FOCUS == "0" ]] || :
+        echo "b"
+        yabai -m window "${WINDOW_ID}" --deminimize "${WINDOW_ID}";
+        yabai -m window "${WINDOW_ID}" --opacity 0.95;
+        yabai -m window "$WINDOW_ID" --focus "$WINDOW_ID";
+
+    elif [[ $MINI -eq "0" ]]; then
+
+
+      if [[ $FOCUS == "0" ]]; then
+        yabai -m window "$WINDOW_ID" --focus "$WINDOW_ID";
+        yabai -m window $WINDOW_ID --toggle sticky
+        yabai -m window $WINDOW_ID --move abs:0:0
+        yabai -m window $WINDOW_ID --resize abs:10000:450
+        yabai -m window $WINDOW_ID --opacity 0.95
+
+      else
+        yabai -m window "$WINDOW_ID" --opacity 0.001;
+        yabai -m window "$WINDOW_ID" --minimize ${WINDOW_ID};
+      fi
+    fi
+  fi
+}
+kitty_quake $1
+

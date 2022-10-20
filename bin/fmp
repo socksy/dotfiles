@@ -1,0 +1,2 @@
+#!/bin/sh
+cd /Users/ben/pitch-app && scripts/fmt --and-amend-last-commit && git push

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+#sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+
+
+MAX_BRIGHTNESS=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+UNIT=$(echo "$2 * 0.01 * $MAX_BRIGHTNESS" | bc -l)
+CURRENT=$(cat /sys/class/backlight/intel_backlight/brightness)
+
+case "$1" in
+  inc)
+    OP="+"
+    ;;
+  dec)
+    OP="-"
+    ;;
+  *) 
+    echo "Usage $0 inc|dec [percentage]"
+esac
+  
+# 0.5/1 thing is to round to integer
+NEW_VAL=$(echo "(($CURRENT $OP $UNIT)+0.5)/1" | bc)
+
+if [ $NEW_VAL -gt $MAX_BRIGHTNESS ] ; then
+  echo $MAX_BRIGHTNESS > /sys/class/backlight/intel_backlight/brightness
+elif [ $NEW_VAL -lt 0 ] ; then
+  echo 0 > /sys/class/backlight/intel_backlight/brightness
+else
+  echo $NEW_VAL > /sys/class/backlight/intel_backlight/brightness
+fi

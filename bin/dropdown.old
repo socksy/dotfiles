@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""
+App dropdown script for Yabai
+It'll display or hide provided app by name
+LICENSE: GPLv3+ by bernardas.alisauskas@pm.me
+"""
+import json
+import subprocess
+
+import click
+from click import echo
+
+YABAI = '/Users/ben/.nix-profile/bin/yabai';
+
+
+def run(cmd: str, start_new_session=False):
+    echo(f'start new session={start_new_session}')
+    return subprocess.run(cmd, shell=True, capture_output=True, start_new_session=start_new_session).stdout
+
+
+def run_json(cmd: str):
+    return json.loads(run(cmd))
+
+def get_window():
+    windows = run_json(f'{YABAI} -m query --windows')
+    for window in windows:
+        if window['title'] == 'hotkey-window':
+            return window
+    return None
+
+@click.command()
+@click.option('--scratchpad', '-s', default='6', show_default=True,
+              help='hidden workspace name')
+def main(scratchpad):
+    """Dropdown functionality for yabai. Either summon or hide program by app name"""
+    echo(f'calling kitty')
+    window = get_window()
+    if not window:
+        subprocess.Popen(['kitty', '--title', 'hotkey-window', '--single-instance'], start_new_session=True)
+        window = get_window()
+
+    if not window:
+        echo('lol wtf')
+    if window['visible']:
+        # if visible, hide it to scratchpad workspace
+        run(f'{YABAI} -m window {window["id"]} --space {scratchpad}')
+        echo(f'kitty hidden')
+    else:
+        # otherwise pull to current workspace and focus
+        frame = run_json(f'{YABAI} -m query --displays --display mouse | jq ".frame"')
+        echo(
+            f'{YABAI} -m window {window["id"]}  --resize abs:{frame["w"]}:{int(frame["h"]/3)} && '
+            f'{YABAI} -m window {window["id"]} --space mouse && '
+            f'{YABAI} -m window --focus {window["id"]} && '
+            f'{YABAI} -m window {window["id"]}  --move abs:{frame["x"]}:{frame["y"]}'
+            )
+        run(
+            f'{YABAI} -m window {window["id"]}  --resize abs:{frame["w"]}:{int(frame["h"]/3)} && '
+            f'{YABAI} -m window {window["id"]} --space mouse && '
+            f'{YABAI} -m window --focus {window["id"]} && '
+            f'{YABAI} -m window {window["id"]}  --move abs:{frame["x"]}:{frame["y"]}'
+            )
+        echo(f'kitty revealed')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,2 @@
+#!/bin/sh
+ln -sf `nix-build ~/fhs.nix`/bin/enter-fhs /home/ben/bin/enter-fhs

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+CURRENT_X="$(yabai -m query --windows --window | jq '.frame.x')"
+yabai -m query --displays | jq -e "any(.frame.x <= $CURRENT_X and $CURRENT_X <= .frame.x+50)"
