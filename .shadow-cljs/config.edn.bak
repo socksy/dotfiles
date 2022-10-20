@@ -1,0 +1,4 @@
+{:dependencies [[cider/cider-nrepl "0.27.0-SNAPSHOT"]
+                [refactor-nrepl "3.2.2"]]
+ :jvm-opts ["-Xms1G" "-Xmx2G"]
+ :open-file-command ["emacsclient" "-n" ["+%s:%s" :line :column] :file]}
