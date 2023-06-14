@@ -15,6 +15,7 @@
   upstream = "!git branch --set-upstream-to=origin/$(git branch --show-current)"
   #pr = "!xdg-open \"http://github.com/$(git remote -v|sed -e '/^origin/!d' -e '/(push)$/!d' -e 's|^.*github\\.com[:/]\\([^ ]*\\)\\(\\.git |\\s\\).*$|\\1|')/pull/new/$(git rev-parse --abbrev-ref HEAD)\""
   # Go to github webpage  =====
+  fix = absorb --and-rebase --force
 [user]
 	email = ben.j.lovell@gmail.com
 	name = Ben Lovell
@@ -58,3 +59,7 @@
 	ui = auto
 [rerere]
 	enabled = true
+[absorb]
+  maxStack = 30
+[remote "origin"]
+	prune = true
