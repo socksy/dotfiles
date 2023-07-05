@@ -6,7 +6,8 @@
 (setq org-directory "~/sync/org/")
 
 ;(setq doom-theme 'doom-gruvbox)
-(setq doom-theme 'doom-flatwhite)
+;(setq doom-theme 'doom-flatwhite)
+(setq doom-theme 'leuven)
 (setq display-line-numbers-type nil)
 
 ;; ??????? can't run projectile file finding without it????
@@ -124,6 +125,22 @@
 (setq-default with-editor-emacsclient-executable "emacsclient")
 
 ;; `get-next-tag' is extremely slow in magit, with many tags in pitch repo magit-status is unusable
-(remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
-  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
-  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+;(remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
+;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
+;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+
+(defun set-exec-path-from-shell-PATH ()
+  "Set up Emacs' `exec-path' and PATH environment variable to match
+that used by the user's shell.
+
+This is particularly useful under Mac OS X and macOS, where GUI
+apps are not started from a shell."
+  (interactive)
+  (let ((path-from-shell (replace-regexp-in-string
+			  "[ \t\n]*$" "" (shell-command-to-string
+					  "$SHELL --login -c 'echo $PATH'"
+						    ))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(set-exec-path-from-shell-PATH)
