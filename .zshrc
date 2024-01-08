@@ -33,15 +33,11 @@ man() {
 
 #[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
-if [[ "$(uname)" == "Darwin" && -z "$IN_NIX_SHELL" && ! "$(ls --version | grep GNU)" ]]; then
-  alias ls="ls -G"
-else
-  alias ls="ls --color"
-fi
+alias ls="ls --color"
 alias ll="ls -ahlG"
 alias sl=ls
 alias lt="tree -L 3 -C"
-alias gpr="git pull --rebase"
+alias gpr="gh pr view"
 alias gca="git commit -a"
 alias gti=git
 if command -v emacsclient > /dev/null; then
@@ -96,9 +92,9 @@ alias uuidgen='uuidgen | tr "[:upper:]" "[:lower:]"'
 alias nix="noglob nix"
 alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
-alias ns="nix search nixpkgs/22.05"
+alias ns="nix search nixpkgs/nixpkgs-23.05-darwin"
 alias sed="gsed"
-alias be="cd $HOME/pitch-app/services/backend"
+alias be="cd $HOME/pitch-app/projects/backend"
 alias fe="cd $HOME/pitch-app/desktop-app"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
@@ -127,20 +123,15 @@ _gt_yargs_completions()
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
 
-
-function prod_tunnel {
-  local PROOT=/Users/ben/pitch-app
-  PITCH_STAGE=prod
-  PITCH_DB_STAGE=prod
-  AWS_PROFILE=ben-pitch-prod
-  export PITCH_STAGE
-  export PITCH_DB_STAGE
-  export AWS_PROFILE
-  $PROOT/scripts/pit aws-sync-creds
-  $PROOT/services/pitch-db/scripts/ssh-db-tunnel.sh
-  $PROOT/scripts/pit psql --tunnel
-}
-
+source $HOME/bin/_psql_tunnel_functions
 alias pprod='prod_tunnel'
+
+alias ddev='dev_tunnel'
+alias ddev_do_not_use='dev_tunnel_dangerous'
 alias gg='gcal --starting-day=Monday --iso-week-number=yes -K .'
 
+alias mgh='gh pr list --search "involves:@me"'
+
+#source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+#/usr/local/opt/asdf/libexec/asdf.sh
+unsetopt sharehistory

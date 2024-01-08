@@ -32,16 +32,20 @@ do
       coauthor_string+="${COAUTHOR_PREFIX}Radhika Reddy <radhika@pitch.io>"
       shift
       ;;
-    radhika)
-      coauthor_string+="${COAUTHOR_PREFIX}Radhika Reddy <radhika@pitch.io>"
-      shift
-      ;;
     michal)
       coauthor_string+="${COAUTHOR_PREFIX}Michał Buczko <michal@pitch.io>"
       shift
       ;;
     ben)
       coauthor_string+="${COAUTHOR_PREFIX}Ben Lovell <ben@pitch.io>"
+      shift
+      ;;
+    johan)
+      coauthor_string+="${COAUTHOR_PREFIX}Johan Wirén <johan@pitch.io>"
+      shift
+      ;;
+    oliver)
+      coauthor_string+="${COAUTHOR_PREFIX}Oliver Martell Núñez <oliver@pitch.io>"
       shift
       ;;
     *)

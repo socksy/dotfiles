@@ -18,12 +18,14 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#3d434d" "#bae67e"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#3d434d" "#171b24"))
  '(lsp-idle-delay 0.8)
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(objed-cursor-color "#f28779")
  '(pdf-view-midnight-colors (cons "#cbccc6" "#1f2430"))
  '(rustic-ansi-faces
    ["#1f2430" "#f28779" "#bae67e" "#ffd580" "#73d0ff" "#d4bfff" "#5ccfe6" "#cbccc6"])
  '(safe-local-variable-values
-   '((eval define-clojure-indent
+   '((cider-clojure-cli-aliases . ":dev:test")
+     (eval define-clojure-indent
       (reg-cofx :defn)
       (reg-event-db :defn)
       (reg-event-fx :defn)
@@ -74,4 +76,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ivy-minibuffer-match-face-1 ((t (:foreground "#FFFFFF" :weight semi-light)))))
+ '(ivy-minibuffer-match-face-1 ((t (:foreground "#FFFFFF" :weight semi-light))))
+ '(ts-fold-replacement-face ((t (:foreground unspecified :box nil :inherit font-lock-comment-face :weight light)))))

@@ -114,8 +114,8 @@
 
 (setq sql-connection-alist
       '((local-pitch (sql-product 'postgres)
-                     (sql-database (concat "postgresql://pitch_super@localhost:5432/pitch?options=--search_path%3d"
-                                           (getenv "PITCH_STAGE"))))))
+                     (sql-database (concat "postgresql://pitch_super@localhost:54320/pitch?options=--search_path%3d"
+                                           (or (getenv "PITCH_STAGE") "local-dev"))))))
 
 (defalias 'eshell/vi #'eshell/emacs)
 (defalias 'eshell/vim #'eshell/emacs)

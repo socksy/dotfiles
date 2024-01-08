@@ -36,7 +36,8 @@
         :nv :desc "Unwrap with ()" "W" #'sp-unwrap-sexp
         :nv :desc "Barf" "b" #'sp-forward-barf-sexp
         :nv :desc "Slurp" "s" #'sp-forward-slurp-sexp
-        :nv :desc "Raise" "r" #'sp-raise-sexp)
+        :nv :desc "Raise" "r" #'sp-raise-sexp
+        :nv :desc "Transpose" "t" #'sp-transpose-sexp)
 
       (:prefix "j"
         :nv :desc "Jump to symbol" "i" #'imenu
@@ -76,6 +77,11 @@
           :nv "c" #'cider-pprint-eval-last-sexp-to-comment
           :nv "h" #'cider-eval-sexp-up-to-point)))
 
+(after! lsp-mode
+  (map! :localleader
+        (:prefix "f"
+                 :nv "r" #'lsp-find-references)))
+
 (after! sql-mode
   (map! (:localleader
           (:map (clojure-mode-map clojurescript-mode-map)
@@ -98,56 +104,56 @@
 
 ;;; CIDER has some problems with messing with company mode shortcuts, these reset them
 ;; https://github.com/hlissner/doom-emacs/issues/1335#issuecomment-619022468
-(defun custom/unset-company-maps (&rest unused)
-  "Set default mappings (outside of company).
-    Arguments (UNUSED) are ignored."
-  (general-def
-    :states 'insert
-    :keymaps 'override
-    "<down>" nil
-    "<up>"   nil
-    "RET"    nil
-    [return] nil
-    "C-n"    nil
-    "C-p"    nil
-    "C-j"    nil
-    "C-k"    nil
-    "C-h"    nil
-    "C-u"    nil
-    "C-d"    nil
-    "C-s"    nil
-    "C-S-s"   (cond ((modulep! :completion helm) nil)
-                    ((modulep! :completion ivy)  nil))
-    "C-SPC"   nil
-    "TAB"     nil
-    [tab]     nil
-    [backtab] nil))
-
-(defun custom/set-company-maps (&rest unused)
-  "Set maps for when you're inside company completion.
-    Arguments (UNUSED) are ignored."
-  (general-def
-    :states 'insert
-    :keymaps 'override
-    "<down>" #'company-select-next
-    "<up>" #'company-select-previous
-    "RET" #'company-complete
-    [return] #'company-complete
-    "C-w"     nil  ; don't interfere with `evil-delete-backward-word'
-    "C-n"     #'company-select-next
-    "C-p"     #'company-select-previous
-    "C-j"     #'company-select-next
-    "C-k"     #'company-select-previous
-    "C-h"     #'company-show-doc-buffer
-    "C-u"     #'company-previous-page
-    "C-d"     #'company-next-page
-    "C-s"     #'company-filter-candidates
-    "C-S-s"   (cond ((modulep! :completion helm) #'helm-company)
-                    ((modulep! :completion ivy)  #'counsel-company))
-    "C-SPC"   #'company-complete-common
-    "TAB"     #'company-complete-common-or-cycle
-    [tab]     #'company-complete-common-or-cycle
-    [backtab] #'company-select-previous))
+;(defun custom/unset-company-maps (&rest unused)
+;  "Set default mappings (outside of company).
+;    Arguments (UNUSED) are ignored."
+;  (general-def
+;    :states 'insert
+;    :keymaps 'override
+;    "<down>" nil
+;    "<up>"   nil
+;    "RET"    nil
+;    [return] nil
+;    "C-n"    nil
+;    "C-p"    nil
+;    "C-j"    nil
+;    "C-k"    nil
+;    "C-h"    nil
+;    "C-u"    nil
+;    "C-d"    nil
+;    "C-s"    nil
+;    "C-S-s"   (cond ((modulep! :completion helm) nil)
+;                    ((modulep! :completion ivy)  nil))
+;    "C-SPC"   nil
+;    "TAB"     nil
+;    [tab]     nil
+;    [backtab] nil))
+;
+;(defun custom/set-company-maps (&rest unused)
+;  "Set maps for when you're inside company completion.
+;    Arguments (UNUSED) are ignored."
+;  (general-def
+;    :states 'insert
+;    :keymaps 'override
+;    "<down>" #'company-select-next
+;    "<up>" #'company-select-previous
+;    "RET" #'company-complete
+;    [return] #'company-complete
+;    "C-w"     nil  ; don't interfere with `evil-delete-backward-word'
+;    "C-n"     #'company-select-next
+;    "C-p"     #'company-select-previous
+;    "C-j"     #'company-select-next
+;    "C-k"     #'company-select-previous
+;    "C-h"     #'company-show-doc-buffer
+;    "C-u"     #'company-previous-page
+;    "C-d"     #'company-next-page
+;    "C-s"     #'company-filter-candidates
+;    "C-S-s"   (cond ((modulep! :completion helm) #'helm-company)
+;                    ((modulep! :completion ivy)  #'counsel-company))
+;    "C-SPC"   #'company-complete-common
+;    "TAB"     #'company-complete-common-or-cycle
+;    [tab]     #'company-complete-common-or-cycle
+;    [backtab] #'company-select-previous))
 
 (after! cider
   (add-hook 'company-completion-started-hook 'custom/set-company-maps)

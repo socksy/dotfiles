@@ -9,6 +9,7 @@ filetype plugin on
 filetype plugin indent on
 
 au BufNewFile,BufRead *.boot set filetype=clojure
+au BufNewFile,BufRead *.bb set filetype=clojure
 
 if $COLORTERM == 'gnome-terminal' || $COLORTERM == 'xfce4-terminal'
   set t_Co=256
