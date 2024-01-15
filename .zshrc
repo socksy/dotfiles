@@ -81,9 +81,6 @@ export PYTHONSTARTUP=$HOME/.pythonstartup
 alias config="/usr/bin/env git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 eval "$(direnv hook zsh)"
 
-#pitch fmt fix last
-alias fix-last="fmt fix && git commit --amend --no-edit"
-
 # the ? in urls gets interpreted as a glob. I never want globs in these commands anyway
 alias mpv="noglob mpv"
 alias curl="noglob curl"
@@ -94,14 +91,9 @@ alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
 alias ns="nix search nixpkgs/nixpkgs-23.05-darwin"
 alias sed="gsed"
-alias be="cd $HOME/pitch-app/projects/backend"
-alias fe="cd $HOME/pitch-app/desktop-app"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
-alias prod-ssh="AWS_PROFILE=ben-pitch-prod aws s3 ls || aws sso login && AWS_PROFILE=ben-pitch-prod PITCH_DB_STAGE=prod PITCH_STAGE=prod scripts/ssh-db-tunnel.sh"
 eval "$(starship init zsh)"
-
-fpath=("/Users/ben/pitch-app/projects/pit_completions" $fpath) && autoload -U compinit && compinit
 
 #compdef gt
 ###-begin-gt-completions-###
@@ -123,11 +115,6 @@ _gt_yargs_completions()
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
 
-source $HOME/bin/_psql_tunnel_functions
-alias pprod='prod_tunnel'
-
-alias ddev='dev_tunnel'
-alias ddev_do_not_use='dev_tunnel_dangerous'
 alias gg='gcal --starting-day=Monday --iso-week-number=yes -K .'
 
 alias mgh='gh pr list --search "involves:@me"'
