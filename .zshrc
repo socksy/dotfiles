@@ -65,7 +65,7 @@ if [[ "$(uname)" != "Darwin" ]]; then
   eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 else
   #. /Users/ben/.nix-profile/etc/profile.d/nix.sh
-  #Using nix darwin now
+  alias sed="gsed"
 fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -87,10 +87,10 @@ alias curl="noglob curl"
 alias http="noglob http"
 alias uuidgen='uuidgen | tr "[:upper:]" "[:lower:]"'
 alias nix="noglob nix"
+alias nixos-rebuild="noglob nixos-rebuild"
 alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
-alias ns="nix search nixpkgs/nixpkgs-23.05-darwin"
-alias sed="gsed"
+alias ns="nix search nixpkgs/nixos-23.11"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 eval "$(starship init zsh)"
