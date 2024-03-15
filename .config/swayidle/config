@@ -1,0 +1,3 @@
+timeout 900 'benlock'
+timeout 895 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+before-sleep 'benlock'
