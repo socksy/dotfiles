@@ -1,0 +1,27 @@
+#!/bin/sh
+LEFT_WALLPAPER=`find ~/wallpapers/uhd | tail -n +2 | sort -R | tail -n 1`
+echo "Left: $LEFT_WALLPAPER"
+RIGHT_WALLPAPER=`find ~/wallpapers/uhd | tail -n +2 | sort -R | tail -n 1`
+echo "Right: $RIGHT_WALLPAPER"
+
+WALLPAPER_CMD=""
+if command -v feh; then
+  WALLPAPER_CMD="killall feh && feh --bg-fill $LEFT_WALLPAPER --bg-fill $RIGHT_WALLPAPER"
+elif command -v swaybg; then
+  # cba working out how to make outputs work generically for now
+  WALLPAPER_CMD="killall swaybg && swaybg -i $LEFT_WALLPAPER"
+elif command -v setwallpaper; then
+  WALLPAPER_CMD="setwallpaper $LEFT_WALLPAPER"
+fi
+
+VERBOSE=false
+if [[ $1 == "-v" || $1 == "--verbose" ]]; then
+  VERBOSE=true
+fi
+
+if $VERBOSE; then
+  exec $WALLPAPER_CMD &
+else
+  exec nohup $WALLPAPER_CMD & > /dev/null
+fi
+
