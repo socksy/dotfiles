@@ -7,7 +7,7 @@
 
 ;(setq doom-theme 'doom-gruvbox)
 ;(setq doom-theme 'doom-flatwhite)
-(setq doom-theme 'leuven)
+(setq doom-theme 'doom-monokai-machine)
 (setq display-line-numbers-type nil)
 
 ;; ??????? can't run projectile file finding without it????

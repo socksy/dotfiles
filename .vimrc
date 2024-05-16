@@ -48,6 +48,7 @@ Plug 'mattn/emmet-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'hellerve/carp-vim'
 Plug 'LnL7/vim-nix'
+Plug 'jasonccox/vim-wayland-clipboard'
 call plug#end()
 
 "Colorscheme

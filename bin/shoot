@@ -2,7 +2,7 @@
 SESSION_TYPE="$(loginctl show-session $(loginctl|grep $USER|awk '{print $1}') -p Type | sed -e "s/Type=//g")"
 DATE="$(date +"%Y-%m-%d-%H%M%S")"
 SCREENSHOT_LOCATION="${HOME}/pictures/screenshots/${DATE}_screenshot.png"
-if [ $SESSION_TYPE == "wayland" ]; then
+if [[ $SESSION_TYPE == "wayland" ]]; then
   grim -g "$(slurp)" -o $SCREENSHOT_LOCATION
 else
   xfce4-screenshooter -r $a -s $SCREENSHOT_LOCATION
