@@ -45,7 +45,10 @@
                          {:mvn/version "1.0.199"}}
             :main-opts ["-m" "clj-new.create"]}
      :my-nrepl {:override-deps {cider/cider-nrepl {:mvn/version "0.28.5"}
-                             refactor-nrepl/refactor-nrepl {:mvn/version "3.5.2"}}}}
+                             refactor-nrepl/refactor-nrepl {:mvn/version "3.5.2"}}
+               :main-opts ["-m" "nrepl.cmdline" "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]} }
+
+
 
   ;; Provider attributes
 
