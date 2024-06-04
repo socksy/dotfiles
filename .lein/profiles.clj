@@ -1,4 +1,4 @@
-{:repl {:plugins [[refactor-nrepl "3.5.2"]
+{:repl {:plugins [[refactor-nrepl "3.5.5"]
                   [cider/cider-nrepl "0.28.3"] ]}
  :user {:dependencies [[borkdude/jet "0.0.6"]]
         :aliases {"jet" ["run" "-m" "jet.main"]}

@@ -1,7 +1,7 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 set nocompatible
 
@@ -34,7 +34,8 @@ cmap w!! %!sudo tee > /dev/null %
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/seoul256.vim'
+"Plug 'junegunn/seoul256.vim'
+Plug 'sainnhe/everforest'
 Plug 'tpope/vim-surround'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'rking/ag.vim'
@@ -42,17 +43,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 
 "Plug 'tpope/vim-salve', { 'for' : 'clojure' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'Olical/conjure'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'mattn/emmet-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'hellerve/carp-vim'
+
+Plug 'mrcjkb/rustaceanvim'
 Plug 'LnL7/vim-nix'
 Plug 'jasonccox/vim-wayland-clipboard'
 call plug#end()
 
 "Colorscheme
-colo seoul256
+colo everforest
 
 "RainbowParents always on
 au VimEnter * RainbowParenthesesToggle

@@ -36,7 +36,7 @@
 
 (after! org
   (setq org-directory "~/sync/org/"
-        org-agenda-files (files--in org-directory '("todo.org" "routine.org" "calendar/gcal.org"))
+        org-agenda-files (files--in org-directory '("todo.org" "routine.org")); "calendar/gcal.org"))
         org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "STARTED(s!)" "|" "DONE(d!)" "CANCELLED(c)"))
         org-log-done 'time
         org-capture-templates '(("t" "Inbox todo" entry
@@ -67,7 +67,8 @@
                              (?C :foreground "#fcf7b0" :height 1.4)
                              (?D :foreground "white" :height 1.4))
         org-bullets-bullet-list '("➔" "⇨"); '("◑" "◐") ;'(" ")
-        org-gcal-file-alist '(("ben.j.lovell@gmail.com" . "~/sync/org/calendar/gcal.org")))
+        ;org-gcal-file-alist '(("ben.j.lovell@gmail.com" . "~/sync/org/calendar/gcal.org"))
+        )
 
   ;(setq global-hl-line-mode nil)
   (setq hl-line-mode nil)
@@ -83,20 +84,20 @@
               :localleader
               ")" #'org-tags-sparse-tree))
 
-(use-package! org-gcal
- ; :bind (:map org-agenda-mode-map
- ;         ;; "r" is bound to org-agenda-redo
- ;         ("g" . org-gcal-fetch))
- ; :init
- ; (add-hook 'emacs-startup-hook #'org-gcal-fetch)
-  )
+;(use-package! org-gcal
+; ; :bind (:map org-agenda-mode-map
+; ;         ;; "r" is bound to org-agenda-redo
+; ;         ("g" . org-gcal-fetch))
+; ; :init
+; ; (add-hook 'emacs-startup-hook #'org-gcal-fetch)
+;  )
 
-(defun fetch-cal ()
-  (interactive)
-  ;; TODO find alternative to pass because it sucks balls die-gpg-die
-  (setq org-gcal-client-id (+pass-get-secret "APIs/gcal-client-id")
-        org-gcal-client-secret (+pass-get-secret "APIs/gcal-client-secret"))
-  (org-gcal-fetch))
+;(defun fetch-cal ()
+;  (interactive)
+;  ;; TODO find alternative to pass because it sucks balls die-gpg-die
+;  (setq org-gcal-client-id (+pass-get-secret "APIs/gcal-client-id")
+;        org-gcal-client-secret (+pass-get-secret "APIs/gcal-client-secret"))
+;  (org-gcal-fetch))
 
 (defun my-org-agenda-recent-open-loops ()
   (interactive)

@@ -33,15 +33,11 @@ man() {
 
 #[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
-if [[ "$(uname)" == "Darwin" && -z "$IN_NIX_SHELL" && ! "$(ls --version | grep GNU)" ]]; then
-  alias ls="ls -G"
-else
-  alias ls="ls --color"
-fi
+alias ls="ls --color"
 alias ll="ls -ahlG"
 alias sl=ls
 alias lt="tree -L 3 -C"
-alias gpr="git pull --rebase"
+alias gpr="gh pr view"
 alias gca="git commit -a"
 alias gti=git
 if command -v emacsclient > /dev/null; then
@@ -59,7 +55,7 @@ fpath=("$HOME/.zsh/functions" $fpath)
 autoload -U compinit && compinit
 
 export EDITOR=vim
-export TERM=xterm-color
+export TERM=xterm-256color
 
 export LEIN_FAST_TRAMPOLINE=y
 # not working atm
@@ -71,7 +67,7 @@ if [[ "$(uname)" != "Darwin" ]]; then
   fi
 else
   #. /Users/ben/.nix-profile/etc/profile.d/nix.sh
-  #Using nix darwin now
+  alias sed="gsed"
 fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -87,27 +83,19 @@ export PYTHONSTARTUP=$HOME/.pythonstartup
 alias config="/usr/bin/env git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 eval "$(direnv hook zsh)"
 
-#pitch fmt fix last
-alias fix-last="fmt fix && git commit --amend --no-edit"
-
 # the ? in urls gets interpreted as a glob. I never want globs in these commands anyway
 alias mpv="noglob mpv"
 alias curl="noglob curl"
 alias http="noglob http"
 alias uuidgen='uuidgen | tr "[:upper:]" "[:lower:]"'
 alias nix="noglob nix"
+alias nixos-rebuild="noglob nixos-rebuild"
 alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
-alias ns="nix search nixpkgs/22.05"
-alias sed="gsed"
-alias be="cd $HOME/pitch-app/services/backend"
-alias fe="cd $HOME/pitch-app/desktop-app"
+alias ns="nix search nixpkgs/nixos-23.11"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
-alias prod-ssh="AWS_PROFILE=ben-pitch-prod aws s3 ls || aws sso login && AWS_PROFILE=ben-pitch-prod PITCH_DB_STAGE=prod PITCH_STAGE=prod scripts/ssh-db-tunnel.sh"
 eval "$(starship init zsh)"
-
-fpath=("/Users/ben/pitch-app/projects/pit_completions" $fpath) && autoload -U compinit && compinit
 
 #compdef gt
 ###-begin-gt-completions-###
@@ -129,20 +117,10 @@ _gt_yargs_completions()
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
 
-
-function prod_tunnel {
-  local PROOT=/Users/ben/pitch-app
-  PITCH_STAGE=prod
-  PITCH_DB_STAGE=prod
-  AWS_PROFILE=ben-pitch-prod
-  export PITCH_STAGE
-  export PITCH_DB_STAGE
-  export AWS_PROFILE
-  $PROOT/scripts/pit aws-sync-creds
-  $PROOT/services/pitch-db/scripts/ssh-db-tunnel.sh
-  $PROOT/scripts/pit psql --tunnel
-}
-
-alias pprod='prod_tunnel'
 alias gg='gcal --starting-day=Monday --iso-week-number=yes -K .'
 
+alias mgh='gh pr list --search "involves:@me"'
+
+#source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+#/usr/local/opt/asdf/libexec/asdf.sh
+unsetopt sharehistory

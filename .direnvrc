@@ -1,4 +1,4 @@
-source /run/current-system/sw/share/nix-direnv/direnvrc
+#source /run/current-system/sw/share/nix-direnv/direnvrc
 
 # https://github.com/nix-community/nix-direnv#storing-direnv-outside-the-project-directory
 : ${XDG_CACHE_HOME:=$HOME/.cache}

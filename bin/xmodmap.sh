@@ -56,16 +56,18 @@ xinput --map-to-output $(xinput list --id-only "ELAN Touchscreen") eDP-1
 
 # double the sensitivity of the logitech mouse
 xinput --set-prop 'Logitech USB Optical Mouse' 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1 2>/dev/null
-xinput --set-prop 'DLL075B:01 06CB:76AF Touchpad' 'Coordinate Transformation Matrix' 8.0 0 0 0 8.0 0 0 0 1.0>/dev/null
+xinput --set-prop 'DLL075B:01 06CB:76AF Touchpad' 'Coordinate Transformation Matrix' 4.0 0 0 0 4.0 0 0 0 1.0>/dev/null
 xinput --set-prop 'ELAN Touchscreen' 'libinput Calibration Matrix' 1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0
-xinput --set-prop 'pointer:Logitech MX Master' 'Coordinate Transformation Matrix' 3.0 0 0 0 3.0 0 0 0 1.0 >/dev/null
+xinput --set-prop 'pointer:Logitech MX Master' 'Coordinate Transformation Matrix' 2.0 0 0 0 2.0 0 0 0 1.0 >/dev/null
 
+# ms before doing something, amount of times per second
+xset r rate 220 40
 
 xsetroot -cursor_name left_ptr
 # scrolling is really slow now for some reason??
 #PROP_TO_SET="$(xinput --list | grep DLL | grep Touchpad | cut -f 2 | cut -d "=" -f 2)"
 #xinput set-prop $PROP_TO_SET 'Trackpad Scroll Distance' 20
 #??????
- $(systemctl is-active --quiet wpa_supplicant) || sudo systemctl restart wpa_supplicant.service
+ $(systemctl is-active --quiet wpa_supplicant-wlp58s0.service) || sudo systemctl restart wpa_supplicant-wlp58s0.service.service
 killall xcape 2>/dev/null 
 xcape -e "Shift_L=parenleft;Shift_R=parenright;Control_L=Escape"
