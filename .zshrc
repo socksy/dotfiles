@@ -66,7 +66,9 @@ export LEIN_FAST_TRAMPOLINE=y
 #export function command_not_found_handler(){command-not-found $1; exit 1}
 
 if [[ "$(uname)" != "Darwin" ]]; then
-  eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+  if command -v keychain; then
+    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+  fi
 else
   #. /Users/ben/.nix-profile/etc/profile.d/nix.sh
   #Using nix darwin now

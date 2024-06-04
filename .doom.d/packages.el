@@ -12,7 +12,7 @@
 ;;(package! emojify)
 ;(package! org-alert)
 ;(package! helm-spotify-plus)
-(package! git-link)
+;(package! git-link)
 ;(package! org-superstar)
 ;(package! feature-mode)
 ;
