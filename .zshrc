@@ -55,7 +55,7 @@ fpath=("$HOME/.zsh/functions" $fpath)
 autoload -U compinit && compinit
 
 export EDITOR=vim
-export TERM=xterm-color
+export TERM=xterm-256color
 
 export LEIN_FAST_TRAMPOLINE=y
 # not working atm

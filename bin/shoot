@@ -3,7 +3,8 @@ SESSION_TYPE="$(loginctl show-session $(loginctl|grep $USER|awk '{print $1}') -p
 DATE="$(date +"%Y-%m-%d-%H%M%S")"
 SCREENSHOT_LOCATION="${HOME}/pictures/screenshots/${DATE}_screenshot.png"
 if [[ $SESSION_TYPE == "wayland" ]]; then
-  grim -g "$(slurp)" -o $SCREENSHOT_LOCATION
+  #grim -g "$(slurp)" -o $SCREENSHOT_LOCATION
+  ~/bin/hyprshot -m region -o ~/pictures/screenshots
 else
   xfce4-screenshooter -r $a -s $SCREENSHOT_LOCATION
 fi
