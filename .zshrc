@@ -1,3 +1,4 @@
+#zmodload zsh/zprof
 # Created by newuser for 5.1.1
 # allows autocompletion from the middle of a filename
 #if command -v dircolors > /dev/null; then
@@ -8,9 +9,16 @@ zstyle ':completion:*' completer _expand _complete _ignored _correct _approximat
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=** r:|=**' #'r:|[._-]=** r:|=**' ''
 zstyle :compinstall filename "$HOME/.zshrc"
 
-autoload -U compinit promptinit
-compinit
-promptinit
+#autoload -U compinit promptinit
+autoload -Uz compinit
+# only check if .zcompdump file is out of date once a day - when developing completions it makes sense to disable this
+if [ "$(find ~/.zcompdump -mtime 1)" ] ; then
+  echo "Regenerating .zcompdump as it's more than a day old"
+	compinit;
+else
+	compinit -C;
+fi;
+#promptinit
 setopt completealiases
 
 HISTFILE=~/.histfile
@@ -62,7 +70,7 @@ export LEIN_FAST_TRAMPOLINE=y
 #export function command_not_found_handler(){command-not-found $1; exit 1}
 
 if [[ "$(uname)" != "Darwin" ]]; then
-  if command -v keychain; then
+  if command -v keychain > /dev/null; then
     eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
   fi
 else
@@ -124,3 +132,4 @@ alias mgh='gh pr list --search "involves:@me"'
 #source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
 #/usr/local/opt/asdf/libexec/asdf.sh
 unsetopt sharehistory
+#zprof
