@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+pushd /home/ben/code/nixconf > /dev/null
+nixfmt *.nix
+nixfmt wayland/*.nix
+# can only run in sudo
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+if $(nixos-rebuild switch -p hyprland --flake "./wayland#benixos" --log-format internal-json -v $@ |& nom --json); then
+  read -p "Build successful. Commit? [y/n] " MAKE_COMMIT
+  case $MAKE_COMMIT in
+    [Yy]* ) git add -p && git commit && sudo -u ben git push; ;;
+    * ) exit;;
+  esac
+fi
