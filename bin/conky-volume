@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if $HOME/bin/muted-or-not; then
+  echo -n '^fg(\#770000)'
+else
+  echo -n '^fg(\#828a8c)'
+fi
+echo " $($HOME/bin/current-volume)%"

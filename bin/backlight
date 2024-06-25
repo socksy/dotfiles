@@ -21,9 +21,9 @@ esac
 # 0.5/1 thing is to round to integer
 NEW_VAL=$(echo "(($CURRENT $OP $UNIT)+0.5)/1" | bc)
 
-if [ $NEW_VAL -gt $MAX_BRIGHTNESS ] ; then
+if [[ $NEW_VAL -gt $MAX_BRIGHTNESS ]] ; then
   echo $MAX_BRIGHTNESS > /sys/class/backlight/intel_backlight/brightness
-elif [ $NEW_VAL -lt 0 ] ; then
+elif [[ $NEW_VAL -lt 0 ]] ; then
   echo 0 > /sys/class/backlight/intel_backlight/brightness
 else
   echo $NEW_VAL > /sys/class/backlight/intel_backlight/brightness

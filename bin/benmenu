@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+rofi -show drun -font "Roboto Sans 12" --show-icons

@@ -1,5 +1,0 @@
-#!/bin/sh
-dkeys
-cd $HOME/rpm/rpm2
-emacs &
-vagrant up && lein repl

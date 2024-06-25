@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nvim /home/ben/code/nixconf/wayland/configuration.nix
