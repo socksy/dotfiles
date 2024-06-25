@@ -100,7 +100,7 @@ alias nix="noglob nix"
 alias nixos-rebuild="noglob nixos-rebuild"
 alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
-alias ns="nix search nixpkgs/nixos-23.11"
+alias ns="nix search nixpkgs"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 eval "$(starship init zsh)"
