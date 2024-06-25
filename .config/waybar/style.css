@@ -54,7 +54,7 @@
 
 #tray {
   margin: 4px 4px 4px 4px;
-  border-radius: 4px;
+  /*border-radius: 4px;*/
   background-color: @base02;
 }
 
