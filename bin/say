@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#nix-shell -p mimic --run "echo '$@' | mimic --setf duration_stretch=0.8 -voice slt"
+if command -v piper &> /dev/null; then
+  PIPER=piper
+else
+  PIPER='nix run nixpkgs#piper-tts" --'
+fi
+if command -v mpv &> /dev/null; then
+  MPV=mpv
+else
+  MPV='nix run nixpkgs#mpv --'
+fi
+if command -v wpctl &> /dev/null; then
+  # attempting to see if we can force it to unsuspend by muting and unmuting (or keeping it in mute if that's how the system was before)
+  # if, say, a bluetooth device is suspened, then it could take longer for it to unsuspend than to speak a single word
+  wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+fi
+echo $@ | $PIPER -m ~/ai/voice-models/en_GB-alba-medium.onnx -c ~/ai/voice-models/en_GB-alba-medium.onnx.json --length_scale 0.8 --sentence_silence 0.1 --output-raw -f - 2> /dev/null | $MPV - > /dev/null
+
