@@ -25,6 +25,8 @@
 ;(setq neo-buffer-width 16)
 ;(setq neo-smart-open t)
 
+(setq lsp-clojure-custom-server-command '("bash" "-c" "/run/current-system/sw/bin/clojure-lsp"))
+
 (after! lsp-mode
   (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-auto-guess-root nil)
