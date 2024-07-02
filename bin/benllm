@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+INPUT_COLOR=$'\001\e[00;32m\002'
+LLM_COLOR=$'\001\e[00;34m\002'
+NORMAL_COLOR=$'\001\e[0m\002'
+LLM_CMD="ollama run llama3 --nowordwrap"
+
+read -ep "${INPUT_COLOR}prompt for bash oneliner: $NORMAL_COLOR" PROMPT
+BASE_PROMPT="You're a non talkative bash scripting machine. When given a prompt you will return with an unformatted one-liner that can be run in a bash shell that performs the requirement of the prompt. If you do not know how to do it, you will return with: echo \"I'm afraid I can't do that Dave.\""
+
+POTENTIAL_CMD="$($LLM_CMD "$BASE_PROMPT\n An example would be\nprompt: I want to create a tar gzip of the current directory\nyou: tar zcvf tarball.tar.gz .\n\nHere's the prompt: $PROMPT. What's the one liner that solves this?")"
+
+echo -e "\n${INPUT_COLOR}Received the following suggestion from llama3:"
+echo "${LLM_COLOR}$POTENTIAL_CMD"
+
+if [[ $1 == '--yolo' ]]; then
+  RUN_YN="y"
+  echo -n $NORMAL_COLOR
+else
+  read -ep "${INPUT_COLOR}run command? [y/n]: $NORMAL_COLOR" RUN_YN
+fi
+
+case $RUN_YN in
+  [Yy]* ) set -x; eval $POTENTIAL_CMD; set +x; exit ;;
+esac
+
+while true; do
+  read -ep "${INPUT_COLOR}make suggestion to improve the command?: $NORMAL_COLOR" SUGGESTION
+  POTENTIAL_CMD="$($LLM_CMD "$BASE_PRMPT\n\nLuckily for you, the user has already got a first draft of a command, and it's your job to return the same command, but improved.\nAn example of a command might be: \ncp -r *.png ./dest\nThe user adds the suggestion prompt: copy all jpeg files, not pngs\n\ncp -r *.jpeg ./dest\nThe user's current first draft is this:\n$POTENTIAL_CMD. The user adds the suggestion prompt::\n$SUGGESTION")"
+  echo -e "\nReceived the following new suggestion from llama3:"
+  echo "${LLM_COLOR}$POTENTIAL_CMD"
+  read -ep "${INPUT_COLOR}run command? [y/n]: $NORMAL_COLOR" RUN_YN
+  case $RUN_YN in
+    [Yy]* ) set -x && eval $POTENTIAL_CMD; exit ;;
+    * ) continue ;;
+  esac
+done
