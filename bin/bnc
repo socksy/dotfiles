@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-nvim /home/ben/code/nixconf/wayland/configuration.nix
+if [[ $hostname = 'benixos' ]]; then
+  SUBDIR=wayland
+else
+  SUBDIR=framework
+fi
+nvim /home/ben/code/nixconf/$SUBDIR/configuration.nix

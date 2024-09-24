@@ -135,7 +135,7 @@
         "bat": "BAT2"
     },
     "network": {
-        "interface": "wlp58s0", // (Optional) To force the use of this interface
+        //"interface": "wlp1s0", // (Optional) To force the use of this interface
         "format-wifi": "{essid} <span></span>",
         "tooltip-format-wifi": "{essid} ({signalStrength}%) <span></span>",
         "format-ethernet": "{ipaddr}/{cidr} <span></span>",

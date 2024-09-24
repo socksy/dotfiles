@@ -9,6 +9,8 @@
 ;(setq doom-theme 'doom-flatwhite)
 (setq doom-theme 'doom-monokai-machine)
 (setq display-line-numbers-type nil)
+(pixel-scroll-mode)
+(pixel-scroll-precision-mode)
 
 ;; ??????? can't run projectile file finding without it????
 (setq browse-url-mosaic-program "firefox")
