@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/nix/store/1sc4m0p42w96xc4njg8mqx95yna01jvc-quickemu-4.9.5/bin/.quickemu-wrapped --vm macos-ventura.conf
+Path=/home/ben
+Name=macos-ventura
+Icon=qemu

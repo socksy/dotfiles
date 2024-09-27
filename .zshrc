@@ -134,3 +134,5 @@ alias mgh='gh pr list --search "involves:@me"'
 #/usr/local/opt/asdf/libexec/asdf.sh
 unsetopt sharehistory
 #zprof
+alias windows='quickemu --vm $HOME/VMs/windows-11.conf'
+alias macos='quickemu --vm $HOME/VMs/macos-ventura.conf'
