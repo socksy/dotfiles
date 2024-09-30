@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# taken from https://gist.github.com/martinkozle/6f622e36e5686751ef6ef90db33f4c36
+# switch gets set to "next" if all current active keymaps are the same
+# if there is more than 1 unique active keymap for any keyboard (like when plugging in a new keyboard), then it gets set to "0"
+# this will reset all keyboards to the 0th index layout so they become consistent
+switch=$(hyprctl devices -j | jq -r '.keyboards[] | .active_keymap' | uniq -c | [ $(wc -l) -eq 1 ] && echo "next" || echo "0")
+echo "switch is $switch"
+
+# change the layout of every keyboard in hyprland devices
+for device in $(hyprctl devices -j | jq -r '.keyboards[] | .name')
+do
+  echo "about to exec"
+  echo "hyprctl switchxkblayout $device $switch"
+  hyprctl switchxkblayout $device $switch
+done
+
+# get the first keyboard's active keymap
+activeKeymap=$(hyprctl devices -j | jq -r '.keyboards[0] | .active_keymap')
+
+# if switch is "0" then add (reset) to the end of the notification
+if [ $switch == "0" ]
+then
+  resetStr="(reset)"
+else
+  resetStr=""
+fi
+
+# notify which keyboard layout has been changed (tweak the duration to liking)
+hyprctl notify -1 1500 0 "$activeKeymap $resetStr"
