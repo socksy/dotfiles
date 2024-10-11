@@ -9,6 +9,11 @@ zstyle ':completion:*' completer _expand _complete _ignored _correct _approximat
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=** r:|=**' #'r:|[._-]=** r:|=**' ''
 zstyle :compinstall filename "$HOME/.zshrc"
 
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
+
 #autoload -U compinit promptinit
 autoload -Uz compinit
 # only check if .zcompdump file is out of date once a day - when developing completions it makes sense to disable this
@@ -136,3 +141,16 @@ unsetopt sharehistory
 #zprof
 alias windows='quickemu --vm $HOME/VMs/windows-11.conf'
 alias macos='quickemu --vm $HOME/VMs/macos-ventura.conf'
+
+f () {
+  ${1-vim} $(fd -H . | fzf)
+}
+vl () {
+  if [[ $!! =~ "rg" ]]; then
+    repeat_cmd="!! --heading"
+  else
+    repeat_cmd="!!"
+  fi
+  echo "repeating $repeat_cmd"
+  ${1-vim} "$(repeat_cmd |& head -1)"
+}
