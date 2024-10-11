@@ -42,7 +42,7 @@ man() {
 #[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 alias ls="ls --color"
-alias ll="ls -ahlG"
+alias ll="eza -ahl"
 alias sl=ls
 alias lt="tree -L 3 -C"
 alias gpr="gh pr view"
