@@ -69,3 +69,5 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! feature-mode)
+
+(package! aider :recipe (:host github :repo "tninja/aider.el" :files ("*.el")))

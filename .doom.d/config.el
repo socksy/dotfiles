@@ -8,6 +8,8 @@
 ;(setq doom-theme 'doom-gruvbox)
 ;(setq doom-theme 'doom-flatwhite)
 (setq doom-theme 'doom-monokai-machine)
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'normal))
+
 (setq display-line-numbers-type nil)
 (pixel-scroll-mode)
 (pixel-scroll-precision-mode)
@@ -132,6 +134,16 @@
 ;(remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
 ;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
 ;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+;
+
+
+(load "./secrets.el")
+(use-package aider
+  :config
+  (setq aider-args '("--model" "ollama/qwen2.5-coder"))
+  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
+
 
 (defun set-exec-path-from-shell-PATH ()
   "Set up Emacs' `exec-path' and PATH environment variable to match
@@ -141,9 +153,9 @@ This is particularly useful under Mac OS X and macOS, where GUI
 apps are not started from a shell."
   (interactive)
   (let ((path-from-shell (replace-regexp-in-string
-			  "[ \t\n]*$" "" (shell-command-to-string
-					  "$SHELL --login -c 'echo $PATH'"
-						    ))))
+                          "[ \t\n]*$" "" (shell-command-to-string
+                                          "$SHELL --login -c 'echo $PATH'"
+                                                    ))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
