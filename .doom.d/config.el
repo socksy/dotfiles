@@ -140,7 +140,8 @@
 (load "./secrets.el")
 (use-package aider
   :config
-  (setq aider-args '("--model" "ollama/qwen2.5-coder"))
+  ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
+  (setq aider-args '("--sonnet"))
   (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
   (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
 
