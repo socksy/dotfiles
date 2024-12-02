@@ -6,3 +6,5 @@ if [ -e /Users/ben/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/ben/.nix-p
 export ASPELL_CONF="dict-dir $HOME/.nix-profile/lib/aspell"
 # this gets clobbered by some display manager nix setting?
 export XDG_DATA_DIRS=$HOME/.local/share/applications:$XDG_DATA_DIRS
+export EDITOR="nvim"
+export OLLAMA_API_BASE="http://127.0.0.1:11434"

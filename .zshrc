@@ -106,6 +106,7 @@ alias nixos-rebuild="noglob nixos-rebuild"
 alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
 alias ns="nix search nixpkgs"
+alias nsu="nix search nixpkgs/nixos-unstable"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 eval "$(starship init zsh)"
@@ -154,3 +155,5 @@ vl () {
   echo "repeating $repeat_cmd"
   ${1-vim} "$(repeat_cmd |& head -1)"
 }
+alias hyprconf="$EDITOR /home/ben/.config/hypr/hyprland.conf"
+alias v='TERM="xterm kitty" viu'
