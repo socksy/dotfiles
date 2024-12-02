@@ -137,12 +137,12 @@
 ;
 
 
-(load "./secrets.el")
+(require 'secrets nil t)
 (use-package aider
   :config
   ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
   (setq aider-args '("--sonnet"))
-  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+  (setenv "ANTHROPIC_API_KEY" 'anthropic-api-key)
   (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
 
 
@@ -161,3 +161,8 @@ apps are not started from a shell."
     (setq exec-path (split-string path-from-shell path-separator))))
 
 (set-exec-path-from-shell-PATH)
+
+(after! tree-sitter
+  (add-to-list 'treesit-language-source-alist
+               '(typst "https://github.com/uben0/tree-sitter-typst")))
+

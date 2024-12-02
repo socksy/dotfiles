@@ -71,3 +71,8 @@
 (package! feature-mode)
 
 (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("*.el")))
+
+;; Typst
+(package! typst-ts-mode
+  :recipe (:type git :host codeberg :repo "meow_king/typst-ts-mode"
+                 :files (:defaults "*.el")))
