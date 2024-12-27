@@ -137,13 +137,22 @@
 ;
 
 
-(require 'secrets nil t)
-(use-package aider
+
+(use-package! aider
   :config
   ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
   (setq aider-args '("--sonnet"))
-  (setenv "ANTHROPIC_API_KEY" 'anthropic-api-key)
+  (load (expand-file-name "secrets.el" doom-user-dir))
+  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
   (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
+
+(use-package! codespaces
+  :config (codespaces-setup)
+  :bind ("C-c S" . #'codespaces-connect))
+
+(setq vc-handled-backends '(Git))
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+(setq tramp-ssh-controlmaster-options "")
 
 
 (defun set-exec-path-from-shell-PATH ()
