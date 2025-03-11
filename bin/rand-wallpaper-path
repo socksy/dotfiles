@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+if [[ -n $1 ]]; then
+  DIR=$1
+else
+  DIR=/home/ben/wallpapers
+fi
+
+find $DIR | shuf -n 1

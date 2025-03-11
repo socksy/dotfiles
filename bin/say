@@ -15,5 +15,5 @@ if command -v wpctl &> /dev/null; then
   # if, say, a bluetooth device is suspened, then it could take longer for it to unsuspend than to speak a single word
   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 fi
-echo $@ | $PIPER -m ~/ai/voice-models/en_GB-alba-medium.onnx -c ~/ai/voice-models/en_GB-alba-medium.onnx.json --length_scale 0.8 --sentence_silence 0.1 --output-raw -f - 2> /dev/null | $MPV - > /dev/null
+echo $@ | $PIPER -m ~/models/en_GB-alba-medium.onnx -c ~/models/en_GB-alba-medium.onnx.json --length_scale 0.8 --sentence_silence 0.1 --output-raw -f - 2> /dev/null | $MPV - > /dev/null
 
