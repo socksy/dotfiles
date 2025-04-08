@@ -84,7 +84,6 @@ else
 fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 export PYTHONSTARTUP=$HOME/.pythonstartup
 
@@ -155,5 +154,6 @@ vl () {
   echo "repeating $repeat_cmd"
   ${1-vim} "$(repeat_cmd |& head -1)"
 }
-alias hyprconf="$EDITOR /home/ben/.config/hypr/hyprland.conf"
+alias hyc="$EDITOR /home/ben/.config/hypr/hyprland.conf"
 alias v='TERM="xterm kitty" viu'
+alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
