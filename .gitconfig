@@ -65,3 +65,6 @@
 	prune = true
 [safe]
 	directory = /etc/nixos
+[http]
+	postBuffer = 500M
+	maxRequestBuffer = 100M

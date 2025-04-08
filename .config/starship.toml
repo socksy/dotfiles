@@ -1,5 +1,6 @@
 format = """
 $username\
+$os\
 $hostname\
 $directory\
 $git_branch\
@@ -44,3 +45,10 @@ style = "yellow"
 [python]
 format = "[$virtualenv]($style) "
 style = "bright-black"
+
+[os]
+disabled = false
+format = "$symbol"
+
+[os.symbols]
+Ubuntu = "[](yellow)  "
