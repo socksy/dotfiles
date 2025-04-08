@@ -155,5 +155,7 @@ vl () {
   ${1-vim} "$(repeat_cmd |& head -1)"
 }
 alias hyc="$EDITOR /home/ben/.config/hypr/hyprland.conf"
+alias bngg="nvim /home/ben/code/nixconf/modules/gnome.nix"
+alias bng="nvim /home/ben/code/nixconf/modules/graphics_stuff.nix"
 alias v='TERM="xterm kitty" viu'
 alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
