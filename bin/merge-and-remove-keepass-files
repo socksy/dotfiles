@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! ls keepass2db.sync-conflict-*.kdbx >/dev/null 2>&1; then
+    echo "No conflict files found"
+    exit 0
+fi
+
+read -s -p "Password: " pass
+echo
+
+to_delete=()
+failed=()
+
+for file in keepass2db.sync-conflict-*.kdbx; do
+    echo "Merging $file..."
+    if echo "$pass" | keepassxc-cli merge --same-credentials keepass2db.kdbx "$file"; then
+        to_delete+=("$file")
+    else
+        failed+=("$file")
+        echo "Failed to merge $file"
+    fi
+done
+
+pass=""
+
+if [ ${#to_delete[@]} -gt 0 ]; then
+    echo -e "\nSuccessfully merged ${#to_delete[@]} files"
+    read -p "Delete successfully merged files? (y/N) " confirm
+    if [[ $confirm =~ ^[Yy] ]]; then
+        rm "${to_delete[@]}"
+        echo "Deleted merged files"
+    fi
+fi
+
+if [ ${#failed[@]} -gt 0 ]; then
+    echo -e "\nFailed to merge: ${failed[@]}"
+fi

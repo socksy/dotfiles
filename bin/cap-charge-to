@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sudo ectool fwchargelimit "${1-80}"

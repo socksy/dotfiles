@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+if [[ "$(hostname)" == "fenixos" ]]; then
+  echo "Wrong script, use fenixos-build"
+  exit 1
+fi
+
 pushd /home/ben/code/nixconf > /dev/null
 nixfmt *.nix
 nixfmt wayland/*.nix

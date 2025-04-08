@@ -108,7 +108,7 @@
        ;;prodigy           ; FIXME managing external services & code builders
        ;rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
-       ;;terraform         ; infrastructure as code
+       terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        tree-sitter       ; syntax and parsing, sitting in a tree...
        upload            ; map local to remote projects via ssh/ftp
@@ -172,7 +172,7 @@
        rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ruby              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust +lsp)              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp +tree-sitter)              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        scheme            ; a fully conniving family of lisps
        (sh +lsp +tree-sitter)                ; she sells {ba,z,fi}sh shells on the C xor
