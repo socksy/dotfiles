@@ -63,3 +63,5 @@
   maxStack = 30
 [remote "origin"]
 	prune = true
+[safe]
+	directory = /etc/nixos
