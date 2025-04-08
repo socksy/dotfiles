@@ -77,6 +77,15 @@
           :nv "c" #'cider-pprint-eval-last-sexp-to-comment
           :nv "h" #'cider-eval-sexp-up-to-point)))
 
+(after! go-mode
+  (map! :localleader
+        :map go-mode-map
+        :nv "e" nil
+        (:prefix "e"
+         :nv "e" #'gorepl-eval-line
+         :nv "r" #'gorepl-eval-region
+         :nv "q" #'gorepl-quit)))
+
 (after! lsp-mode
   (map! :localleader
         (:prefix "f"
