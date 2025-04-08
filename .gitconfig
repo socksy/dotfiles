@@ -63,3 +63,6 @@
   maxStack = 30
 [remote "origin"]
 	prune = true
+[http]
+	postBuffer = 500M
+	maxRequestBuffer = 100M
