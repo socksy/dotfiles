@@ -76,7 +76,7 @@ export LEIN_FAST_TRAMPOLINE=y
 
 if [[ "$(uname)" != "Darwin" ]]; then
   if command -v keychain > /dev/null; then
-    eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+    eval $(keychain --eval -Q --quiet id_rsa)
   fi
 else
   #. /Users/ben/.nix-profile/etc/profile.d/nix.sh
@@ -159,3 +159,4 @@ alias bngg="nvim /home/ben/code/nixconf/modules/gnome.nix"
 alias bng="nvim /home/ben/code/nixconf/modules/graphics_stuff.nix"
 alias v='TERM="xterm kitty" viu'
 alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
+alias nixpkgs_ver="echo $(cat /home/ben/code/nixconf/framework/flake.lock | jq '.nodes.nixpkgs.locked.rev' -r)"
