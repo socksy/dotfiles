@@ -160,3 +160,5 @@ alias bng="nvim /home/ben/code/nixconf/modules/graphics_stuff.nix"
 alias v='TERM="xterm kitty" viu'
 alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
 alias nixpkgs_ver="echo $(cat /home/ben/code/nixconf/framework/flake.lock | jq '.nodes.nixpkgs.locked.rev' -r)"
+alias darbuild="sudo darwin-rebuild switch --flake '/Users/ben/.nixpkgs#bens-mbp'"
+eval "$(/opt/homebrew/bin/brew shellenv)"
