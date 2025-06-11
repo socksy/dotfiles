@@ -1,5 +1,6 @@
 [push]
 	default = upstream
+	autoSetupRemote = true
 [alias]
 	co = checkout
 	br = branch
