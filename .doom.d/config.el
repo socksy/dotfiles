@@ -5,12 +5,31 @@
 (load! "+org.el")
 (setq org-directory "~/sync/org/")
 
-                                        ;(setq doom-theme 'doom-gruvbox)
-                                        ;(setq doom-theme 'doom-flatwhite)
-(setq doom-theme 'doom-monokai-machine)
-(setq doom-theme 'modus-operandi)
+(setq my-fav-themes '(modus-operandi-tinted
+                      doom-monokai-machine
+                      doom-gruvbox
+                      doom-flatwhite
+                      doom-monokai-ristretto
+                      doom-solarized-light
+                      doom-oceanic-next
+                      tsdh-dark))
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'normal))
+(defun rand-nth (list) (nth (random (length list)) list))
+
+(setq doom-theme (rand-nth my-fav-themes))
+
+
+(setq font-families '("FiraCode Nerd Font"
+                      "CaskaydiaCove Nerd Font"
+                      "ZedMono Nerd Font"
+                      "RobotoMono Nerd Font"
+                      "RecMonoCasual Nerd Font"
+                      "RecMonoDuotone Nerd Font"
+                      "RecMonoLinear Nerd Font"))
+
+
+                                        ;(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'normal))
+(setq doom-font (font-spec :family (rand-nth font-families) :size 16 :weight 'normal))
 
 (setq display-line-numbers-type nil)
 (pixel-scroll-mode)
@@ -141,13 +160,13 @@
 
 
 
-(use-package! aider
-  :config
-                                        ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
-  (setq aider-args '("--sonnet" "--no-check-update"))
-  (load (expand-file-name "secrets.el" doom-user-dir))
-  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
-  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
+;(use-package! aider
+;  :config
+;                                        ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
+;  (setq aider-args '("--sonnet" "--no-check-update"))
+;  (load (expand-file-name "secrets.el" doom-user-dir))
+;  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+;  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
 
 (use-package! codespaces
   :config (codespaces-setup)
