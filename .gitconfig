@@ -70,3 +70,5 @@
 [http]
 	postBuffer = 500M
 	maxRequestBuffer = 100M
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/

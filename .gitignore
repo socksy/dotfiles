@@ -3,5 +3,7 @@ pitch-app/web-app/target-prod
 /Users/ben/pitch-app/projects/pretzel-yak/
 .aider*
 CLAUDE.md
+.claude
+**/.claude/settings.local.json
 .devenv.*
 .devenv/*

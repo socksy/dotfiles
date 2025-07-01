@@ -10,3 +10,7 @@ export EDITOR="nvim"
 export OLLAMA_API_BASE="http://127.0.0.1:11434"
 . "$HOME/.cargo/env"
 export LANG="en_GB.UTF-8"
+
+export OLLAMA_CONTEXT_LENGTH=32768
+export OLLAMA_FLASH_ATTENTION=true
+export OLLAMA_KV_CACHE_TYPE=q4_0 
