@@ -83,6 +83,8 @@ else
   #. /Users/ben/.nix-profile/etc/profile.d/nix.sh
   alias sed="gsed"
   export SYS_NIX_FLAKE=/Users/ben/.nixpkgs/flake.lock
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  source /Users/ben/tower/scripts/tower-api
 fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -103,6 +105,7 @@ alias curl="noglob curl"
 alias http="noglob http"
 alias uuidgen='uuidgen | tr "[:upper:]" "[:lower:]"'
 alias nix="noglob nix"
+alias tower="noglob tower"
 alias nixos-rebuild="noglob nixos-rebuild"
 alias git="noglob git"
 alias icat="kitty +kitten icat --align left"
@@ -163,4 +166,3 @@ alias v='TERM="xterm kitty" viu'
 alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
 alias nixpkgs_ver="echo $(jq -r '.nodes.nixpkgs.locked.rev' $SYS_NIX_FLAKE)"
 alias darbuild="sudo darwin-rebuild switch --flake '/Users/ben/.nixpkgs#bens-mbp'"
-eval "$(/opt/homebrew/bin/brew shellenv)"
