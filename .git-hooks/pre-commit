@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+trufflehog git file://. --since-commit HEAD --results=verified,unknown --fail

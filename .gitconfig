@@ -35,6 +35,7 @@
 [core]
 	pager = "less -R"
 	excludesFile = ~/.gitignore
+	hooksPath = ~/.git-hooks
 [pager]
   diff = delta
   log = delta
