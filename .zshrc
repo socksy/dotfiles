@@ -166,3 +166,4 @@ alias v='TERM="xterm kitty" viu'
 alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
 alias nixpkgs_ver="echo $(jq -r '.nodes.nixpkgs.locked.rev' $SYS_NIX_FLAKE)"
 alias darbuild="sudo darwin-rebuild switch --flake '/Users/ben/.nixpkgs#bens-mbp'"
+alias tower-local="nix run ~/code/tower/tower-cli -- --tower-url=http://localhost:8081"
