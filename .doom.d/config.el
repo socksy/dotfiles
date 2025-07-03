@@ -197,3 +197,23 @@ apps are not started from a shell."
   (add-to-list 'treesit-language-source-alist
                '(typst "https://github.com/uben0/tree-sitter-typst")))
 
+(defun +fold/auto-fold-go-errors ()
+  "Automatically fold Go error checking blocks."
+  (interactive)
+  (when (and (eq major-mode 'go-mode)
+             (+fold--ensure-hideshow-mode))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "err != nil {" nil t)
+        (save-excursion
+          (beginning-of-line)
+          (when (+fold--hideshow-fold-p)
+            (ignore-errors (+fold/close))))))))
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (run-with-idle-timer 0.5 nil #'+fold/auto-fold-go-errors)))
+
+(map! :map go-mode-map
+      :localleader
+      "f" #'+fold/auto-fold-go-errors)
