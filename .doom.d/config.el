@@ -160,13 +160,13 @@
 
 
 
-;(use-package! aider
-;  :config
-;                                        ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
-;  (setq aider-args '("--sonnet" "--no-check-update"))
-;  (load (expand-file-name "secrets.el" doom-user-dir))
-;  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
-;  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
+                                        ;(use-package! aider
+                                        ;  :config
+                                        ;                                        ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
+                                        ;  (setq aider-args '("--sonnet" "--no-check-update"))
+                                        ;  (load (expand-file-name "secrets.el" doom-user-dir))
+                                        ;  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+                                        ;  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
 
 (use-package! codespaces
   :config (codespaces-setup)
