@@ -26,6 +26,10 @@ fi;
 #promptinit
 setopt completealiases
 
+if which aws_completer &> /dev/null; then
+    complete -C aws_completer aws
+fi
+
 HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=5000
@@ -65,7 +69,6 @@ alias please=sudo
 alias grep="grep --color=auto"
 
 fpath=("$HOME/.zsh/functions" $fpath)
-autoload -U compinit && compinit
 
 export EDITOR=vim
 export TERM=xterm-256color
