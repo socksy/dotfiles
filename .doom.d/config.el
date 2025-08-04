@@ -214,6 +214,77 @@ apps are not started from a shell."
           (lambda ()
             (run-with-idle-timer 0.5 nil #'+fold/auto-fold-go-errors)))
 
-(map! :map go-mode-map
-      :localleader
-      "f" #'+fold/auto-fold-go-errors)
+                                        ;(map! :map go-mode-map
+                                        ;      :localleader
+                                        ;      "f" #'+fold/auto-fold-go-errors)
+
+(if (eq system-type 'darwin)
+    (setq magit-git-executable "/run/current-system/sw/bin/git"))
+
+(defun go-test--find-test ()
+  "Find the current Go test function name."
+  (save-excursion
+    (when (re-search-backward "^func \\(Test[A-Za-z0-9_]+\\)" nil t)
+      (match-string 1))))
+
+(defun go-test--find-subtest (test-func)
+  "Find the nearest t.Run subtest within TEST-FUNC."
+  (save-excursion
+    (when-let* ((current-pos (point))
+                (func-start (when (re-search-backward (format "^func %s" (regexp-quote test-func)) nil t)
+                              (point))))
+      (goto-char current-pos)
+      (when (re-search-backward "t\\.Run(\"\\([^\"]+\\)\"" func-start t)
+        (replace-regexp-in-string " " "_" (match-string 1))))))
+
+(defun go-test--add-subtest (test-func)
+  (if-let ((subtest (go-test--find-subtest test-func)))
+      (format "%s/%s" test-func subtest)
+    test-func))
+
+
+(defun go-test--build-command (test-name)
+  (let* ((project-root (project-root (project-current)))
+         (pkg-path (string-trim (file-relative-name default-directory project-root) "/")))
+    (list (format "scripts/test.sh ./%s %s" pkg-path test-name) test-name project-root)))
+
+(defun go-test--run-process (cmd-info)
+  (let* ((cmd (nth 0 cmd-info))
+         (test-name (nth 1 cmd-info))
+         (project-root (nth 2 cmd-info))
+         (default-directory project-root)
+         (buffer (get-buffer-create (format "*go-test: %s*" test-name)))
+         (process (progn
+                    (with-current-buffer buffer
+                      (let ((inhibit-read-only t)) (erase-buffer))
+                      (insert (format "Running: %s\nFrom: %s\n\n" cmd project-root))
+                      (ansi-color-for-comint-mode-on)
+                      (evil-escape)
+                      (comint-mode))
+                    (start-process "go-test" buffer "bash" "-c" cmd))))
+    (set-process-filter process 'comint-output-filter)
+    (evil-escape)
+    (display-buffer buffer)))
+
+(defun run-go-test-at-point ()
+  "Run the Go test script for the current test function and subtest."
+  (interactive)
+  (if-let ((test-func (go-test--find-test)))
+      (->> test-func
+           (go-test--add-subtest)
+           (go-test--build-command)
+           (go-test--run-process))
+    (user-error "No test function found at point")))
+
+
+(defun toggle-line-numbers ()
+  "Toggle line numbers between normal (absolute) and disabled."
+  (interactive)
+  (if (bound-and-true-p display-line-numbers-mode)
+      (progn
+        (display-line-numbers-mode -1)
+        (message "Line numbers disabled"))
+    (progn
+      (display-line-numbers-mode 1)
+      (setq display-line-numbers t)
+      (message "Line numbers enabled"))))

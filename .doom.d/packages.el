@@ -14,6 +14,7 @@
                                         ;(package! helm-spotify-plus)
 (package! git-link)
 (package! jarchive)
+
                                         ;(package! org-superstar)
                                         ;(package! feature-mode)
                                         ;

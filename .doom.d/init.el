@@ -220,15 +220,15 @@
  '(safe-local-variable-values
    (quote
     ((eval define-clojure-indent
-           (reg-cofx :defn)
-           (reg-event-db :defn)
-           (reg-event-fx :defn)
-           (reg-fx :defn)
-           (reg-sub :defn)
-           (reg-event-domain :defn)
-           (reg-block-event-fx :defn)
-           (reg-event-domain-fx :defn)
-           (this-as 0))))))
+      (reg-cofx :defn)
+      (reg-event-db :defn)
+      (reg-event-fx :defn)
+      (reg-fx :defn)
+      (reg-sub :defn)
+      (reg-event-domain :defn)
+      (reg-block-event-fx :defn)
+      (reg-event-domain-fx :defn)
+      (this-as 0))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
