@@ -172,6 +172,15 @@
   :config (codespaces-setup)
   :bind ("C-c S" . #'codespaces-connect))
 
+(use-package! claude-code-ide
+  :config (claude-code-ide-emacs-tools-setup))
+
+(use-package! vterm-anti-flicker-filter)
+
+;; Fix emoji variants that cause line height issues in vterm
+(set-fontset-font t '(#x2700 . #x27BF) (font-spec :family (face-attribute 'default :family))) ; Dingbats (includes ✳)
+(set-fontset-font t '(#x23E9 . #x23FA) (font-spec :family (face-attribute 'default :family))) ; Media symbols (includes ⏺)
+
 (setq vc-handled-backends '(Git))
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 (setq tramp-ssh-controlmaster-options "")

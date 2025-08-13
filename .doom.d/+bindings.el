@@ -31,7 +31,7 @@
        ;; also works for cider jumping
        :nv :desc "Jump back" "b"  #'dumb-jump-back)
 
-      (:prefix "k"
+      (:prefix ("k" . "smartparens")
        :nv :desc "Wrap with ()" "w" #'sp-wrap-round
        :nv :desc "Unwrap with ()" "W" #'sp-unwrap-sexp
        :nv :desc "Barf" "b" #'sp-forward-barf-sexp
@@ -39,7 +39,7 @@
        :nv :desc "Raise" "r" #'sp-raise-sexp
        :nv :desc "Transpose" "t" #'sp-transpose-sexp)
 
-      (:prefix "j"
+      (:prefix ("j" . "jump")
        :nv :desc "Jump to symbol" "i" #'imenu
        :nv :desc "Jump to symbol across buffers" "I" #'imenu-anywhere
        :nv :desc "Jump to link" "l" #'ace-link
@@ -50,7 +50,8 @@
        :nv :desc "Neotree" "t" #'neotree-open-this)
 
       (:prefix "o"
-       :nv :desc "Neotree for this file" "p" #'neotree-open-this)
+       :nv :desc "Neotree for this file" "p" #'neotree-open-this
+       :nv :desc "Open Claude Code IDE" "c" #'claude-code-ide-menu)
 
       (:prefix "b"
        :nv :desc "Switch buffer"               "b" #'switch-to-buffer

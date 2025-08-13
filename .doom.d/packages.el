@@ -86,3 +86,9 @@
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("editors/protobuf-mode.el")))
+
+(package! claude-code-ide
+  :recipe (:host github :repo "manzaltu/claude-code-ide.el"))
+
+(package! vterm-anti-flicker-filter
+  :recipe (:host github :repo "martinbaillie/vterm-anti-flicker-filter"))
