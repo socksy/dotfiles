@@ -289,7 +289,7 @@ apps are not started from a shell."
 (defun toggle-line-numbers ()
   "Toggle line numbers between normal (absolute) and disabled."
   (interactive)
-  (if (bound-and-true-p display-line-numbers-mode)
+  (if display-line-numbers
       (progn
         (display-line-numbers-mode -1)
         (message "Line numbers disabled"))
