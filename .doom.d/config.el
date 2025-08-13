@@ -28,7 +28,7 @@
                       "RecMonoLinear Nerd Font"))
 
 
-                                        ;(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'normal))
+;;(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'normal))
 (setq doom-font (font-spec :family (rand-nth font-families) :size 16 :weight 'normal))
 
 (setq display-line-numbers-type nil)
@@ -43,12 +43,12 @@
 
 ;; Trying helm again..
 ;; add recentf and bookmarks to switch buffers command
-                                        ;(setq ivy-use-virtual-buffers t)
-                                        ;(setq +ivy-project-search-engines '(rg ag))
-                                        ;(setq counsel-projectile-sort-files t)
-                                        ;(setq counsel-projectile-sort-buffers t)
-                                        ;(setq neo-buffer-width 16)
-                                        ;(setq neo-smart-open t)
+;;(setq ivy-use-virtual-buffers t)
+;;(setq +ivy-project-search-engines '(rg ag))
+;;(setq counsel-projectile-sort-files t)
+;;(setq counsel-projectile-sort-buffers t)
+;;(setq neo-buffer-width 16)
+;;(setq neo-smart-open t)
 
 (setq lsp-clojure-custom-server-command '("bash" "-c" "/run/current-system/sw/bin/clojure-lsp"))
 
@@ -62,32 +62,32 @@
 
 (setq flyspell-lazy-idle-second 5)
 
-                                        ;(use-package! catppuccin-theme
-                                        ; :config
-                                        ; (setq catppuccin-height-title1 1.5))
+;;(use-package! catppuccin-theme
+;; :config
+;; (setq catppuccin-height-title1 1.5))
 
 (after! ivy
   ;; add recentf and bookmarks to switch buffers command
   (setq ivy-use-virtual-buffers t
         ivy-count-format ""))
 
-                                        ;(after! 'emojify (setq emojify-emoji-set "twemoji-v2-22"))
+;;(after! 'emojify (setq emojify-emoji-set "twemoji-v2-22"))
 
-                                        ;(defun +personal-org-use-packages ()
-                                        ;    (use-package! org-super-agenda
-                                        ;      :after org-agenda
-                                        ;      :init nil)
-                                        ;
-                                        ;  (use-package! org-alert
-                                        ;    :ensure t
-                                        ;                                        ;:defer 20
-                                        ;    :config
-                                        ;    (setq org-alert-interval 600)
-                                        ;    (org-alert-enable)))
-                                        ;
-                                        ;(add-hook 'org-mode-hook #'+personal-org-use-packages)
+;;(defun +personal-org-use-packages ()
+;;    (use-package! org-super-agenda
+;;      :after org-agenda
+;;      :init nil)
+;;
+;;  (use-package! org-alert
+;;    :ensure t
+;;                                        ;:defer 20
+;;    :config
+;;    (setq org-alert-interval 600)
+;;    (org-alert-enable)))
+;;
+;;(add-hook 'org-mode-hook #'+personal-org-use-packages)
 
-                                        ;(add-hook 'after-init-hook #'global-emojify-mode)
+;;(add-hook 'after-init-hook #'global-emojify-mode)
 (add-hook 'clojure-mode-hook (lambda ()
                                (define-clojure-indent
                                 ;; re-frame
@@ -113,25 +113,25 @@
       (dumb-jump-go))))
 
 ;; stolen from spacemacs
-                                        ;(defun ben/sudo-edit (&optional arg)
-                                        ;  (interactive "P")
-                                        ;  (let ((fname (if (or arg (not buffer-file-name))
-                                        ;                   (read-file-name "File: ")
-                                        ;                 buffer-file-name)))
-                                        ;    (find-file
-                                        ;     (cond ((string-match-p "^/ssh:" fname)
-                                        ;            (with-temp-buffer
-                                        ;              (insert fname)
-                                        ;              (search-backward ":")
-                                        ;              (let ((last-match-end nil)
-                                        ;                    (last-ssh-hostname nil))
-                                        ;                (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
-                                        ;                  (setq last-ssh-hostname (or (match-string 1 fname)
-                                        ;                                              last-ssh-hostname))
-                                        ;                  (setq last-match-end (match-end 0)))
-                                        ;                (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
-                                        ;              (buffer-string)))
-                                        ;           (t (concat "/sudo:root@localhost:" fname))))))
+;;(defun ben/sudo-edit (&optional arg)
+;;  (interactive "P")
+;;  (let ((fname (if (or arg (not buffer-file-name))
+;;                   (read-file-name "File: ")
+;;                 buffer-file-name)))
+;;    (find-file
+;;     (cond ((string-match-p "^/ssh:" fname)
+;;            (with-temp-buffer
+;;              (insert fname)
+;;              (search-backward ":")
+;;              (let ((last-match-end nil)
+;;                    (last-ssh-hostname nil))
+;;                (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
+;;                  (setq last-ssh-hostname (or (match-string 1 fname)
+;;                                              last-ssh-hostname))
+;;                  (setq last-match-end (match-end 0)))
+;;                (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
+;;              (buffer-string)))
+;;           (t (concat "/sudo:root@localhost:" fname))))))
 
 (display-time-mode t)
 
@@ -148,25 +148,25 @@
 (defalias 'eshell/vi #'eshell/emacs)
 (defalias 'eshell/vim #'eshell/emacs)
 
-                                        ; This stopped working when using latest src build of emacs, so manually setting
-                                        ; (it's weird because it's in the $PATH)
+;; This stopped working when using latest src build of emacs, so manually setting
+;; (it's weird because it's in the $PATH)
 (setq-default with-editor-emacsclient-executable "emacsclient")
 
 ;; `get-next-tag' is extremely slow in magit, with many tags in pitch repo magit-status is unusable
-                                        ;(remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
-                                        ;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
-                                        ;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
-                                        ;
+;;(remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
+;;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
+;;  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+;;
 
 
 
-                                        ;(use-package! aider
-                                        ;  :config
-                                        ;                                        ;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
-                                        ;  (setq aider-args '("--sonnet" "--no-check-update"))
-                                        ;  (load (expand-file-name "secrets.el" doom-user-dir))
-                                        ;  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
-                                        ;  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
+;;(use-package! aider
+;;  :config
+;;(setq aider-args '("--model" "ollama/qwen2.5-coder"))
+;;  (setq aider-args '("--sonnet" "--no-check-update"))
+;;  (load (expand-file-name "secrets.el" doom-user-dir))
+;;  (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+;;  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
 
 (use-package! codespaces
   :config (codespaces-setup)
@@ -223,9 +223,9 @@ apps are not started from a shell."
           (lambda ()
             (run-with-idle-timer 0.5 nil #'+fold/auto-fold-go-errors)))
 
-                                        ;(map! :map go-mode-map
-                                        ;      :localleader
-                                        ;      "f" #'+fold/auto-fold-go-errors)
+;;(map! :map go-mode-map
+;;      :localleader
+;;      "f" #'+fold/auto-fold-go-errors)
 
 (if (eq system-type 'darwin)
     (setq magit-git-executable "/run/current-system/sw/bin/git"))

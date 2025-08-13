@@ -15,10 +15,10 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       ;company           ; the ultimate code completion backend
+                                        ;company           ; the ultimate code completion backend
        (corfu +orderless)
        vertico
-       ;(helm +fuzzy)              ; the *other* search engine for love and life
+                                        ;(helm +fuzzy)              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;(ivy +fuzzy
        ;;     ;+prescient
@@ -29,8 +29,8 @@
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;(emoji +unicode)
+                                        ;doom-quit         ; DOOM quit-message prompts when you quit Emacs
+                                        ;(emoji +unicode)
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
@@ -43,14 +43,14 @@
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
-       ;tabs
-       ;treemacs          ; a project drawer, like neotree but cooler
+                                        ;tabs
+                                        ;treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages
        (vc-gutter +pretty)         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
-       ;zen
+                                        ;zen
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
@@ -59,9 +59,9 @@
        (format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who dont like vim
-       ;multiple-cursors
+                                        ;multiple-cursors
                                         ; editing in many places at once
-       ;objed             ; text object editing for the innocent
+                                        ;objed             ; text object editing for the innocent
        ;;parinfer          ; turn lisp into python, sort of
        rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
@@ -97,7 +97,7 @@
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)              ; run code, run (also, repls)
-       ;gist              ; interacting with github gists
+                                        ;gist              ; interacting with github gists
        (lookup           ; helps you navigate your code and documentation
         +docsets)        ; ...or in Dash docsets locally
        lsp
@@ -106,7 +106,7 @@
        ;;(pass +auth)              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;rgb               ; creating color strings
+                                        ;rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
@@ -185,19 +185,19 @@
        zig
 
        :email
-       ;(mu4e +gmail)       ; WIP
+                                        ;(mu4e +gmail)       ; WIP
        ;;notmuch             ; WIP
-       ;(wanderlust +gmail) ; WIP
+                                        ;(wanderlust +gmail) ; WIP
 
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
        :app
-       ;calendar
+                                        ;calendar
        ;;irc              ; how neckbeards socialize
-       ;(rss +org)        ; emacs as an RSS reader
+                                        ;(rss +org)        ; emacs as an RSS reader
 
-       ;syntax
+                                        ;syntax
 
        :collab
        ;;floobits          ; peer programming for a price
