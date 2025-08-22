@@ -8,7 +8,7 @@ export ASPELL_CONF="dict-dir $HOME/.nix-profile/lib/aspell"
 export XDG_DATA_DIRS=$HOME/.local/share/applications:$XDG_DATA_DIRS
 export EDITOR="nvim"
 export OLLAMA_API_BASE="http://127.0.0.1:11434"
-. "$HOME/.cargo/env"
+if [ -e "$HOME/.cargo/env" ]; then . "$HOME/.cargo/env"; fi
 export LANG="en_GB.UTF-8"
 
 export OLLAMA_CONTEXT_LENGTH=32768
