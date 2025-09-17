@@ -172,3 +172,7 @@ alias darbuild="sudo darwin-rebuild switch --flake '/Users/ben/.nixpkgs#bens-mbp
 alias tower-local="nix run ~/code/tower/tower-cli -- --tower-url=http://localhost:8081"
 alias mst="moon services:test"
 alias tt="cd ~/code/tower/tower-trees"
+alias vun=vim #for typos...
+export NIXPKGS_ALLOW_UNFREE=1
+alias npi="nix profile install --impure"
+
