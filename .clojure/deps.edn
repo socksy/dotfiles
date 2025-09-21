@@ -20,9 +20,9 @@
   ;; :deps {
   ;;   org.clojure/clojure {:mvn/version "1.9.0"}
   ;; }
-  :deps {cider/cider-nrepl {:mvn/version "0.45.0"}
-         nrepl/nrepl {:mvn/version "0.9.0"}
-         refactor-nrepl/refactor-nrepl {:mvn/version "3.6.0"} }
+  :deps {cider/cider-nrepl {:mvn/version "0.57.0"}
+         nrepl/nrepl {:mvn/version "1.3.1"}
+         refactor-nrepl/refactor-nrepl {:mvn/version "3.11.0"}}
         
 
   ;; Aliases
@@ -38,15 +38,21 @@
      ;:deps {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.5.435"}}}
      :test {:extra-paths ["test"]}
      :try {:extra-deps {deps-try/deps-try {:git/url "https://gitlab.com/eval/deps-try"
-                                  :sha "f3989ab8ccb11f3aa00cb6bb251bab8dd44449d9"}}
+                                           :sha "f3989ab8ccb11f3aa00cb6bb251bab8dd44449d9"}}
            :main-opts ["-m" "deps-try.main"]}
-
      :new {:extra-deps {seancorfield/clj-new
-                         {:mvn/version "1.0.199"}}
-            :main-opts ["-m" "clj-new.create"]}
-     :my-nrepl {:override-deps {cider/cider-nrepl {:mvn/version "0.45.0"}
-                             refactor-nrepl/refactor-nrepl {:mvn/version "3.5.2"}}
-               :main-opts ["-m" "nrepl.cmdline" "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]} }
+                        {:mvn/version "1.0.199"}}
+           :main-opts ["-m" "clj-new.create"]}
+     :my-nrepl {:override-deps {cider/cider-nrepl {:mvn/version "0.57.0"}
+                                refactor-nrepl/refactor-nrepl {:mvn/version "3.11.0"}}
+                :main-opts ["-m" "nrepl.cmdline" "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]} 
+     :mcp 
+      {:deps {org.slf4j/slf4j-nop {:mvn/version "2.0.16"}
+              com.bhauman/clojure-mcp {:git/url "https://github.com/bhauman/clojure-mcp.git"
+                                       :git/tag "v0.1.8-alpha"
+                                       :git/sha "457f197"}}
+       :exec-fn clojure-mcp.main/start-mcp-server
+       :exec-args {:port 7888}}}
 
 
 
