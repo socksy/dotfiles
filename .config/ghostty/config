@@ -4,3 +4,4 @@ shell-integration = detect
 macos-option-as-alt = left
 theme = Catppuccin Macchiato
 config-file = theme.conf
+keybind = global:cmd+shift+enter=toggle_quick_terminal
