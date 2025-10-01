@@ -1,5 +1,6 @@
 font-size = 15
 scrollback-limit = 10000000
-#background-opacity = 0.95
 shell-integration = detect
-theme = Heeler
+macos-option-as-alt = left
+theme = Catppuccin Macchiato
+config-file = theme.conf

@@ -117,6 +117,7 @@ alias nsu="nix search nixpkgs/nixos-unstable"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 eval "$(starship init zsh)"
+[[ -x ~/.config/ghostty/random-theme.sh ]] && ~/.config/ghostty/random-theme.sh
 
 ## TODO why do i have this?
 ##compdef gt
