@@ -1,7 +1,6 @@
 format = """
 $username\
-$os\
-$hostname \
+$hostname\
 $directory\
  $cmd_duration\
 $fill\
@@ -9,7 +8,7 @@ $fill\
 $line_break\
 $python\
 $character"""
-right_format = '$direnv$nix_shell'
+#right_format = '$nix_shell$direnv'
 
 [directory]
 style = "blue"
@@ -148,7 +147,7 @@ symbol = "󰔷 "
 symbol = "󰆥 "
 
 [nix_shell]
-symbol = ""
+symbol = " "
 disabled = false
 impure_msg = 'bold red'
 pure_msg = 'bold green'

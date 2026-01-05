@@ -2,6 +2,6 @@ font-size = 15
 scrollback-limit = 10000000
 shell-integration = detect
 macos-option-as-alt = left
-theme = Catppuccin Macchiato
-config-file = theme.conf
+theme = "Solarized Darcula"
+#config-file = theme.conf
 keybind = global:cmd+shift+enter=toggle_quick_terminal
