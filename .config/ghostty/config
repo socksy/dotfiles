@@ -1,5 +1,5 @@
 font-size = 15
-scrollback-limit = 10000000
+scrollback-limit = 100000000
 shell-integration = detect
 macos-option-as-alt = left
 theme = "Solarized Darcula"
