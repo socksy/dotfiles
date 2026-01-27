@@ -34,7 +34,7 @@
 	rebase = false
 [core]
 	pager = "less -R"
-	excludesFile = ~/.gitignore
+	excludesfile = /Users/ben/.gitignore
 	hooksPath = ~/.git-hooks
 [pager]
   diff = delta
