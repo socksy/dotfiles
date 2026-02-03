@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Toggle between strict DNS and permissive DNS for captive portals
+set -e
+
+# Find the active wifi interface
+WIFI_IFACE=$(nmcli -t -f DEVICE,TYPE connection show --active 2>/dev/null | grep wireless | cut -d: -f1 | head -1)
+
+if [ -z "$WIFI_IFACE" ]; then
+    echo "No active wifi connection found"
+    exit 1
+fi
+
+# Check if already in permissive mode (DoT disabled)
+if resolvectl status "$WIFI_IFACE" 2>/dev/null | grep -q -- "-DNSOverTLS"; then
+    echo "Currently: PERMISSIVE (captive portal mode)"
+    echo "Switch to: STRICT (DoT + DNSSEC)"
+    read -p "Restore strict DNS? [y/N] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        sudo resolvectl revert "$WIFI_IFACE"
+        echo "Done - strict DNS restored"
+    fi
+else
+    echo "Currently: STRICT (DoT + DNSSEC)"
+    echo "Switch to: PERMISSIVE (plain DNS for captive portal)"
+    read -p "Enable captive portal mode? [y/N] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        DHCP_DNS=$(nmcli -t -f IP4.DNS device show "$WIFI_IFACE" 2>/dev/null | cut -d: -f2 | head -1)
+        if [ -z "$DHCP_DNS" ]; then
+            DHCP_DNS=$(nmcli -t -f IP4.GATEWAY device show "$WIFI_IFACE" 2>/dev/null | cut -d: -f2)
+        fi
+
+        if [ -n "$DHCP_DNS" ]; then
+            sudo resolvectl dns "$WIFI_IFACE" "$DHCP_DNS"
+        fi
+        sudo resolvectl dnsovertls "$WIFI_IFACE" no
+        sudo resolvectl dnssec "$WIFI_IFACE" no
+        sudo resolvectl domain "$WIFI_IFACE" "~."
+
+        echo "Done - using DNS: ${DHCP_DNS:-system default}"
+    fi
+fi
