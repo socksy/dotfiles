@@ -6,7 +6,7 @@ nixfmt modules/*.nix
 # can only run in sudo
 [ "$UID" -eq 0 ] || exec sudo HYPRLAND_INSTANCE_SIGNATURE=$HYPRLAND_INSTANCE_SIGNATURE bash "$0" "$@"
 if $(nixos-rebuild switch -p ${PROFILE_NAME-hypr} --flake "./framework#fenixos" --log-format internal-json -v $@ |& nom --json); then
-  sudo HYPRLAND_INSTANCE_SIGNATURE=$HYPRLAND_INSTANCE_SIGNATURE -u ben /home/ben/code/bens-ags/rebuild
+  #sudo HYPRLAND_INSTANCE_SIGNATURE=$HYPRLAND_INSTANCE_SIGNATURE -u ben /home/ben/code/bens-ags/rebuild
   read -p "Build successful. Commit? [y/n] " MAKE_COMMIT
   case $MAKE_COMMIT in
     [Yy]* ) git add -p && git commit && sudo -u ben git push; ;;

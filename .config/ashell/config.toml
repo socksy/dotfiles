@@ -6,7 +6,7 @@ app_launcher_cmd = "vicinae toggle"
 [modules]
 left = [["AppLauncher", "Workspaces"]]
 center = ["WindowTitle"]
-right = ["MediaPlayer", ["Tray", "Clock", "Calendar", "Notifications", "Privacy", "Settings"]]
+right = ["MediaPlayer", ["Tray", "Calendar", "Notifications", "Privacy", "Settings", "Clock"]]
 
 [workspaces]
 enable_workspace_filling = true
@@ -36,11 +36,11 @@ command = "swaync-client -t -sw"
 
 [appearance]
 style = "Solid"
-opacity = 0.85
+opacity = 0.55
 
 [appearance.menu]
 opacity = 0.9
-backdrop = 0.5
+backdrop = 0.3
 
 # Catppuccin Mocha
 [appearance.background_color]

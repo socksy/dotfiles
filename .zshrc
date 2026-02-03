@@ -78,7 +78,7 @@ export LEIN_FAST_TRAMPOLINE=y
 #export function command_not_found_handler(){command-not-found $1; exit 1}
 
 if [[ "$(uname)" != "Darwin" ]]; then
-  if command -v keychain > /dev/null; then
+  if [[ -z "$SSH_AUTH_SOCK" ]] && command -v keychain > /dev/null; then
     eval $(keychain --eval -Q --quiet id_rsa)
   fi
   export SYS_NIX_FLAKE=/home/ben/code/nixconf/framework/flake.lock

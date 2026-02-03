@@ -4,6 +4,7 @@ pitch-app/web-app/target-prod
 .aider*
 .claude
 !.claude/
+CLAUDE.local.md
 **/.claude/settings.local.json
 .devenv.*
 .devenv/*

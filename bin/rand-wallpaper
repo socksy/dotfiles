@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-for display in $(swww query | cut -d ':' -f 1); do
+for display in $(swww query | cut -d ':' -f 2); do
   swww img "$($(dirname $0)/rand-wallpaper-path)" --transition-type random -o $display
 done

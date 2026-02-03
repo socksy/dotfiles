@@ -15,4 +15,4 @@ echo $photo_json
 url="$(echo $photo_json | jq -r '.urls.raw')"
 slug="$(echo $photo_json | jq -r '.slug')"
 
-curl -s $url > $slug && echo $PWD/$slug
+curl -s $url > $slug.jpg && echo $PWD/$slug.jpg
