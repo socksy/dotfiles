@@ -9,5 +9,4 @@ CLAUDE.local.md
 .devenv.*
 .devenv/*
 *.swp
-CLAUDE.md
 .beads/
