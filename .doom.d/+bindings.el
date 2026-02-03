@@ -94,8 +94,10 @@
 
 (after! lsp-mode
   (map! :localleader
-        (:prefix "f"
-         :nv "r" #'lsp-find-references)))
+        :map lsp-mode-map
+        (:prefix ("f" . "find")
+         :nv "r" #'lsp-find-references
+         :nv "i" #'lsp-find-implementation)))
 
 (after! sql-mode
   (map! (:localleader
@@ -103,6 +105,7 @@
                ;; (:prefix "g"
                ;;   :nv "g" #'spacemacs/clj-find-var)
                (:prefix "h"
+                :desc "help"
                 :nv "h" #'cider-doc)
                (:prefix "e"
                 :nv "f" #'cider-eval-defun-at-point
