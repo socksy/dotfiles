@@ -2,6 +2,6 @@ font-size = 15
 scrollback-limit = 100000000
 shell-integration = detect
 macos-option-as-alt = left
-theme = "Solarized Darcula"
+theme = "Everforest Dark Hard"
 #config-file = theme.conf
 keybind = global:cmd+shift+enter=toggle_quick_terminal
