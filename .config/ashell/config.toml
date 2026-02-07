@@ -15,7 +15,7 @@ enable_workspace_filling = true
 truncate_title_after_length = 80
 
 [clock]
-format = "%H:%M"
+format = "%d.%m.%Y - %H:%M:%S"
 
 [settings]
 lock_cmd = "swaylock"
