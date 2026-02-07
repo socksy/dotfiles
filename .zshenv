@@ -15,4 +15,7 @@ export OLLAMA_CONTEXT_LENGTH=32768
 export OLLAMA_FLASH_ATTENTION=true
 export OLLAMA_KV_CACHE_TYPE=q4_0 
 
-export AWS_DEFAULT_PROFILE="tower.dev-staging"
+# Only set AWS profile if it exists
+if grep -q '\[profile tower\.dev-staging\]' ~/.aws/config 2>/dev/null; then
+  export AWS_DEFAULT_PROFILE="tower.dev-staging"
+fi
