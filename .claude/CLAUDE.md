@@ -142,9 +142,21 @@ gh issue view 201
 - Keeps the conversation focused and efficient
 **Do NOT use:** `browser_navigate`, `browser_snapshot`, or other playwright tools for GitHub PR/issue reviews unless specifically requested by the user.
 
-# General Guidelines
+# Agebox
+`.agebox` files are temporarily deleted during decrypt/encrypt cycles — this is normal agebox behavior. A deleted `.agebox` file in `git status` does NOT mean it should be committed as a removal.
 
-- always prefer the simplest solution (think Simple Made Easy by Rich Hickey)
+# Code Design
+
+Simple means few entangled concerns. Easy means familiar right now (Rich Hickey, Simple Made Easy). When they conflict, choose simple — it pays back over months.
+
+- design by pulling apart, not adding structure. Find where two concerns are joined unnecessarily and separate them
+- pure core, impure edges. Functions that take data and return data can be tested, composed, and parallelized. Push IO and state to the boundary
+- validate at system boundaries, trust data inside the system
+- grow interfaces by accretion. Adding is safe. Removing or narrowing breaks consumers
+- prefer plain data over bespoke wrapper types. Generic maps and structs compose; class hierarchies don't
+- understand the problem before writing code. Most bugs are misconceptions baked in at design time, not typos caught by tests
+
+# General Guidelines
 - be concise, and only include comments that say why code exists, not what
 - if possible, avoid comments completely. You can also remove them afterwards
 - prefer nix commands over system ones where possible. Use uv instead of pip
@@ -187,6 +199,28 @@ When running commands in the background:
 - Use BashOutput tool to check progress or look for specific things in the output
 - Alternatively, redirect to a file that you can read later: `command > /tmp/output.log 2>&1`
 - Use BashOutput with filters if you need to search for specific patterns after completion
+
+# Writing style (for prose, docs, READMEs, etc.)
+
+When writing text that isn't code, don't sound like an LLM. Specific things to avoid:
+
+- **Rigid templates.** Don't use the same `**Bold Label:** content` structure on every paragraph. If you have 8 sections and they all follow identical `**The X:** ... **The Y:** ...` patterns, rewrite them so they don't.
+- **"A good X..." / "The ideal Y..."** as a recurring rhetorical move. Once is fine. Five times in one doc means you're on autopilot.
+- **Colon-as-setup.** "The whole thing is:" or "What you actually want:" or "Scored by:" -- these are filler that delay the point. Just say the point.
+- **Uniform paragraph density.** If every paragraph is roughly the same length and shape, the writing has no rhythm. Mix short and long. A two-word paragraph is fine.
+- **Rule-of-three lists.** "X, Y, and Z" once is natural. Doing it in every paragraph is a tell.
+- **Em dash overuse.** One or two per section, not one per sentence.
+- **Passive voice.** "Tests whether models reach for" → "Do models use the tools?" Active, direct.
+- **Hedging.** "unlikely to be in training data", "could potentially" -- just say the thing.
+- **Sycophantic/filler transitions.** "It's worth noting", "notably", "furthermore", "additionally."
+- **Copula avoidance.** Don't replace "is" with "serves as", "features", "boasts."
+- **Significance inflation.** "plays a crucial role", "marking a pivotal moment."
+- **Inline-header lists.** `**Performance:** Performance improved` -- the bold label adds nothing.
+
+The goal is to sound like a person wrote it, not to sound impressive. Shorter is almost always better. Vary sentence length. Read it back and ask "would a human actually write this?"
+
+# Killing processes
+**NEVER** use `lsof -ti:<port> | xargs kill` — it kills clients too (Claude Code, Firefox, etc.). Always inspect `lsof -i:<port>` first and kill only the specific server PID.
 
 # Other guidelines:
 - Always track progress in beads tasks as you go along, whenever you update a TODO list item that can be a sub task of the task you're currently working on
