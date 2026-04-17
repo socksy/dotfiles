@@ -1,3 +1,21 @@
+# Approach
+- Think before acting. Read existing files before writing code.
+- Be concise in output but thorough in reasoning.
+- Prefer editing over rewriting whole files.
+- Do not re-read files you have already read.
+- Test your code before declaring done.
+- No sycophantic openers or closing fluff.
+- Keep solutions simple and direct.
+- User instructions always override this file.
+
+# Bug Fixes
+- For bug fixes, write a failing test first, then make the minimal fix to pass it. Don't change anything beyond what's needed to fix the bug.
+
+# Scope Discipline
+- Only change what was asked for. No drive-by refactors, no adding abstractions, no modifying unrelated code. If something adjacent should change, say so instead of doing it.
+- When reviewing or discussing code/PRs, focus on what was actually asked about. Don't review adjacent content or go on tangents about related but unscoped topics.
+- Before starting work on a branch, confirm you're on the right one with `git branch --show-current`. Don't assume.
+
 # Task Management with Beads
 
 **IMPORTANT: We use Beads (bd) for tracking all tasks, NOT markdown todo lists or planning docs.**
@@ -156,12 +174,17 @@ Simple means few entangled concerns. Easy means familiar right now (Rich Hickey,
 - prefer plain data over bespoke wrapper types. Generic maps and structs compose; class hierarchies don't
 - understand the problem before writing code. Most bugs are misconceptions baked in at design time, not typos caught by tests
 
+# Git Commits
+- Use conventional commit format (e.g. `chore:`, `fix:`, `feat:`)
+- Do not add `Co-Authored-By` lines unless explicitly asked
+
 # General Guidelines
 - be concise, and only include comments that say why code exists, not what
-- if possible, avoid comments completely. You can also remove them afterwards
+- when writing new code, avoid adding comments unless they explain *why* something exists. Don't remove or rewrite existing comments.
 - prefer nix commands over system ones where possible. Use uv instead of pip
 - prefer fd over find, rg over grep
 - if there is a `develop` branch in a repo (such as on tower, tower-2, tower-cli, tower-deploy), then it is following git flow, and `develop` is the trunk branch that all other branches are branched from and merged into, with `main` being behind `develop`
+- **CRITICAL: when creating feature branches off develop, ALWAYS use `--no-track`**: `git checkout -b feature/my-branch origin/develop --no-track`. Without `--no-track`, the branch tracks `origin/develop` and `git push` silently pushes directly to develop. After creating, push with `git push -u origin feature/my-branch`.
 - sed is aliased to gsed, so always call it with gnu style arguments (e.g. sed -i 's/^apple$/pear/' fruits.txt && cat fruits.txt), extended regex with -r, \t, \s, \n, \w are all escape sequences, newlines can be supported when using braces, deleting lines using + symbol, printing every _nth_ line
 - before running a find and replace operation like sed, perl, or MCP, consider first if there might be other instances of the string you're replacing that you don't intend to replace. However, if the file is unchanged since being committed, it's no big deal to mess it up as you can always `git restore`, so no need to make `.bak` files
 - if you get a "no such file or directory" error after doing `cd directory && command`, use `cd /full/path/to/directory && command` instead of guessing a new command or directory
@@ -272,4 +295,12 @@ When using Dash0 MCP tools, you MUST always specify the `dataset` parameter as e
 
 # Tower
 In the tower repo sometimes the postgres state might not match what you expect. This is probably because there's multiple cloned tower repos, and `devenv up` was launched from the wrong one. This will NEVER be because of a database hook, which does not exist.
-If you want to run a psql command, use the env var `$TOWER_POSTGRES_URL` to connect with the correct port, username and password.
+If you want to run a psql command against the local dev database, use the env var `$TOWER_POSTGRES_URL` to connect with the correct port, username and password.
+
+## Tower prod/staging databases
+NEVER fetch prod or staging DB credentials directly (no `aws secretsmanager get-secret-value` for `postgres.password`, no manual `PGPASSWORD=...` invocations). ALWAYS use the read-only scripts in `/Users/ben/code/tower/tower-db-tools/`:
+- `./prod-db.sh` — interactive prod psql (read-only); opens a basti tunnel on port 25432
+- `./staging-db.sh` — interactive staging psql (read-only); opens a basti tunnel on port 15432
+- `./run-sql.sh [staging|prod] <sql_file> [output_file]` — runs a SQL file against the DB. **Use this for non-interactive queries.** It requires a tunnel already open (run `./prod-db.sh` or `./staging-db.sh` in another terminal first) and handles credentials internally — you don't fetch them yourself.
+- `./prod-redis.sh` / `./staging-redis.sh` — redis clients
+NEVER write to prod. Do not pass `--write` to these scripts under any circumstances. If the user says they have a bastion tunnel open on port 25432, write your query to a `.sql` file and run it with `./run-sql.sh prod query.sql` rather than pulling credentials yourself.

@@ -16,4 +16,6 @@ Some things you might want to consider:
 - prefer events and immutability over mutability
 - think about how the code would be read by a junior programmer - make it easy to follow for them. Do not rely on comments
 
-Given those features, please edit the uncommitted changes such that things are as simple as possible
+Also, read @~/code/clojure-talks/PHILOSOPHY_SYNTHESIS.md
+
+Given those features, please review the uncommitted changes with multiple subagents, then edit only those changes such that things are as simple as possible (do not touch comments or code not in scope, even in the same file).
