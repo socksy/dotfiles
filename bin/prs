@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+gh search prs --state open --review-requested @me --sort updated \
+  --json repository,number,url,author,title,updatedAt \
+  --template '{{$prev := ""}}{{range .}}{{if ne .repository.nameWithOwner $prev}}{{if ne $prev ""}}{{tablerender}}{{end}}
+{{ (autocolor "blue" .repository.nameWithOwner | hyperlink (printf "https://github.com/%v/pulls" .repository.nameWithOwner))}}
+{{$prev = .repository.nameWithOwner}}{{end}}{{tablerow (printf "#%v" .number | autocolor "green" | hyperlink (printf "%v/changes?w=1" .url)) (.title | truncate 60) .author.login (timeago .updatedAt | autocolor "white+d")}}{{end}}{{tablerender}}'
