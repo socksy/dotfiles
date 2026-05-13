@@ -1,3 +1,21 @@
+# Approach
+- Think before acting. Read existing files before writing code.
+- Be concise in output but thorough in reasoning.
+- Prefer editing over rewriting whole files.
+- Do not re-read files you have already read.
+- Test your code before declaring done.
+- No sycophantic openers or closing fluff.
+- Keep solutions simple and direct.
+- User instructions always override this file.
+
+# Bug Fixes
+- For bug fixes, write a failing test first, then make the minimal fix to pass it. Don't change anything beyond what's needed to fix the bug.
+
+# Scope Discipline
+- Only change what was asked for. No drive-by refactors, no adding abstractions, no modifying unrelated code. If something adjacent should change, say so instead of doing it.
+- When reviewing or discussing code/PRs, focus on what was actually asked about. Don't review adjacent content or go on tangents about related but unscoped topics.
+- Before starting work on a branch, confirm you're on the right one with `git branch --show-current`. Don't assume.
+
 # Task Management with Beads
 
 **IMPORTANT: We use Beads (bd) for tracking all tasks, NOT markdown todo lists or planning docs.**
@@ -142,14 +160,31 @@ gh issue view 201
 - Keeps the conversation focused and efficient
 **Do NOT use:** `browser_navigate`, `browser_snapshot`, or other playwright tools for GitHub PR/issue reviews unless specifically requested by the user.
 
-# General Guidelines
+# Agebox
+`.agebox` files are temporarily deleted during decrypt/encrypt cycles — this is normal agebox behavior. A deleted `.agebox` file in `git status` does NOT mean it should be committed as a removal.
 
-- always prefer the simplest solution (think Simple Made Easy by Rich Hickey)
+# Code Design
+
+Simple means few entangled concerns. Easy means familiar right now (Rich Hickey, Simple Made Easy). When they conflict, choose simple — it pays back over months.
+
+- design by pulling apart, not adding structure. Find where two concerns are joined unnecessarily and separate them
+- pure core, impure edges. Functions that take data and return data can be tested, composed, and parallelized. Push IO and state to the boundary
+- validate at system boundaries, trust data inside the system
+- grow interfaces by accretion. Adding is safe. Removing or narrowing breaks consumers
+- prefer plain data over bespoke wrapper types. Generic maps and structs compose; class hierarchies don't
+- understand the problem before writing code. Most bugs are misconceptions baked in at design time, not typos caught by tests
+
+# Git Commits
+- Use conventional commit format (e.g. `chore:`, `fix:`, `feat:`)
+- Do not add `Co-Authored-By` lines unless explicitly asked
+
+# General Guidelines
 - be concise, and only include comments that say why code exists, not what
-- if possible, avoid comments completely. You can also remove them afterwards
+- when writing new code, avoid adding comments unless they explain *why* something exists. Don't remove or rewrite existing comments.
 - prefer nix commands over system ones where possible. Use uv instead of pip
 - prefer fd over find, rg over grep
 - if there is a `develop` branch in a repo (such as on tower, tower-2, tower-cli, tower-deploy), then it is following git flow, and `develop` is the trunk branch that all other branches are branched from and merged into, with `main` being behind `develop`
+- **CRITICAL: when creating feature branches off develop, ALWAYS use `--no-track`**: `git checkout -b feature/my-branch origin/develop --no-track`. Without `--no-track`, the branch tracks `origin/develop` and `git push` silently pushes directly to develop. After creating, push with `git push -u origin feature/my-branch`.
 - sed is aliased to gsed, so always call it with gnu style arguments (e.g. sed -i 's/^apple$/pear/' fruits.txt && cat fruits.txt), extended regex with -r, \t, \s, \n, \w are all escape sequences, newlines can be supported when using braces, deleting lines using + symbol, printing every _nth_ line
 - before running a find and replace operation like sed, perl, or MCP, consider first if there might be other instances of the string you're replacing that you don't intend to replace. However, if the file is unchanged since being committed, it's no big deal to mess it up as you can always `git restore`, so no need to make `.bak` files
 - if you get a "no such file or directory" error after doing `cd directory && command`, use `cd /full/path/to/directory && command` instead of guessing a new command or directory
@@ -187,6 +222,28 @@ When running commands in the background:
 - Use BashOutput tool to check progress or look for specific things in the output
 - Alternatively, redirect to a file that you can read later: `command > /tmp/output.log 2>&1`
 - Use BashOutput with filters if you need to search for specific patterns after completion
+
+# Writing style (for prose, docs, READMEs, etc.)
+
+When writing text that isn't code, don't sound like an LLM. Specific things to avoid:
+
+- **Rigid templates.** Don't use the same `**Bold Label:** content` structure on every paragraph. If you have 8 sections and they all follow identical `**The X:** ... **The Y:** ...` patterns, rewrite them so they don't.
+- **"A good X..." / "The ideal Y..."** as a recurring rhetorical move. Once is fine. Five times in one doc means you're on autopilot.
+- **Colon-as-setup.** "The whole thing is:" or "What you actually want:" or "Scored by:" -- these are filler that delay the point. Just say the point.
+- **Uniform paragraph density.** If every paragraph is roughly the same length and shape, the writing has no rhythm. Mix short and long. A two-word paragraph is fine.
+- **Rule-of-three lists.** "X, Y, and Z" once is natural. Doing it in every paragraph is a tell.
+- **Em dash overuse.** One or two per section, not one per sentence.
+- **Passive voice.** "Tests whether models reach for" → "Do models use the tools?" Active, direct.
+- **Hedging.** "unlikely to be in training data", "could potentially" -- just say the thing.
+- **Sycophantic/filler transitions.** "It's worth noting", "notably", "furthermore", "additionally."
+- **Copula avoidance.** Don't replace "is" with "serves as", "features", "boasts."
+- **Significance inflation.** "plays a crucial role", "marking a pivotal moment."
+- **Inline-header lists.** `**Performance:** Performance improved` -- the bold label adds nothing.
+
+The goal is to sound like a person wrote it, not to sound impressive. Shorter is almost always better. Vary sentence length. Read it back and ask "would a human actually write this?"
+
+# Killing processes
+**NEVER** use `lsof -ti:<port> | xargs kill` — it kills clients too (Claude Code, Firefox, etc.). Always inspect `lsof -i:<port>` first and kill only the specific server PID.
 
 # Other guidelines:
 - Always track progress in beads tasks as you go along, whenever you update a TODO list item that can be a sub task of the task you're currently working on
@@ -242,3 +299,12 @@ If you want to run a psql command, use the env var `$TOWER_POSTGRES_URL` to conn
 
 # Git
 - NEVER use `git -C` when already in the target directory. Just run `git` directly.
+
+## Tower prod/staging databases
+NEVER fetch prod or staging DB credentials directly (no `aws secretsmanager get-secret-value` for `postgres.password`, no manual `PGPASSWORD=...` invocations). ALWAYS use the read-only scripts in `/Users/ben/code/tower/tower-db-tools/`:
+- `./prod-db.sh` — interactive prod psql (read-only); opens a basti tunnel on port 25432
+- `./staging-db.sh` — interactive staging psql (read-only); opens a basti tunnel on port 15432
+- `./run-sql.sh [staging|prod] <sql_file> [output_file]` — runs a SQL file against the DB. **Use this for non-interactive queries.** It requires a tunnel already open (run `./prod-db.sh` or `./staging-db.sh` in another terminal first) and handles credentials internally — you don't fetch them yourself.
+- `./prod-redis.sh` / `./staging-redis.sh` — redis clients
+NEVER write to prod. Do not pass `--write` to these scripts under any circumstances. If the user says they have a bastion tunnel open on port 25432, write your query to a `.sql` file and run it with `./run-sql.sh prod query.sql` rather than pulling credentials yourself.
+>>>>>>> 9329d1fd6eeaad88edaf8c85173760bf70490dec

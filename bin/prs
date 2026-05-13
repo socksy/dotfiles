@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+if [[ "$1" == "--mine" ]]; then
+  gh search prs --state open --author @me --sort updated \
+    --json repository,number,url,author,title,updatedAt,commentsCount \
+    --template '{{$prev := ""}}{{range .}}{{if gt .commentsCount 1.0}}{{if ne .repository.nameWithOwner $prev}}{{if ne $prev ""}}{{tablerender}}{{end}}
+{{ (autocolor "blue" .repository.nameWithOwner | hyperlink (printf "https://github.com/%v/pulls" .repository.nameWithOwner))}}
+{{$prev = .repository.nameWithOwner}}{{end}}{{tablerow (printf "#%v" .number | autocolor "green" | hyperlink (printf "%v/changes?w=1" .url)) (.title | truncate 60) (printf "%v comments" .commentsCount | autocolor "yellow" | hyperlink .url) (timeago .updatedAt | autocolor "white+d")}}{{end}}{{end}}{{tablerender}}'
+else
+  gh search prs --state open --review-requested @me --sort updated \
+    --json repository,number,url,author,title,updatedAt,commentsCount \
+    --template '{{$prev := ""}}{{range .}}{{if ne .repository.nameWithOwner $prev}}{{if ne $prev ""}}{{tablerender}}{{end}}
+{{ (autocolor "blue" .repository.nameWithOwner | hyperlink (printf "https://github.com/%v/pulls" .repository.nameWithOwner))}}
+{{$prev = .repository.nameWithOwner}}{{end}}{{tablerow (printf "#%v" .number | autocolor "green" | hyperlink (printf "%v/changes?w=1" .url)) (.title | truncate 60) .author.login (printf "%v comments" .commentsCount | autocolor "yellow" | hyperlink .url) (timeago .updatedAt | autocolor "white+d")}}{{end}}{{tablerender}}'
+fi

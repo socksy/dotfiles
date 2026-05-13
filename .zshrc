@@ -171,9 +171,16 @@ alias benbarlaunch="/home/ben/code/bens-ags/rebuild"
 nixpkgs_ver() { jq -r '.nodes.nixpkgs.locked.rev' "$SYS_NIX_FLAKE"; }
 alias darbuild="sudo darwin-rebuild switch --flake '/Users/ben/.nixpkgs#bens-mbp'"
 alias tower-local="nix run ~/code/tower/tower-cli -- --tower-url=http://localhost:8081"
-alias mst="moon services:test"
-alias tt="cd ~/code/tower/tower-trees"
+alias mst="moonx services:test"
 alias vun=vim #for typos...
 export NIXPKGS_ALLOW_UNFREE=1
 alias npi="nix profile install --impure"
+alias t1="cd $HOME/code/tower/tower"
+alias t2="cd $HOME/code/tower/tower-2"
+alias td="cd $HOME/code/tower/tower-deploy"
+alias grb="git co develop && git pull && git co - && git rebase develop"
+
+jwt-decode() {
+  jq -R 'split(".") |.[0:2] | map(gsub("-"; "+") | gsub("_"; "/") | gsub("%3D"; "=") | @base64d) | map(fromjson)' <<< $1
+}
 
