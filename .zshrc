@@ -92,8 +92,6 @@ fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 
-export PYTHONSTARTUP=$HOME/.pythonstartup
-
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -178,9 +176,9 @@ alias npi="nix profile install --impure"
 alias t1="cd $HOME/code/tower/tower"
 alias t2="cd $HOME/code/tower/tower-2"
 alias td="cd $HOME/code/tower/tower-deploy"
+alias tdb="cd $HOME/code/tower/tower-db-tools"
 alias grb="git co develop && git pull && git co - && git rebase develop"
 
 jwt-decode() {
   jq -R 'split(".") |.[0:2] | map(gsub("-"; "+") | gsub("_"; "/") | gsub("%3D"; "=") | @base64d) | map(fromjson)' <<< $1
 }
-
