@@ -1,7 +1,9 @@
 #!/bin/sh
 # `npm install -g` path is set with npm config get/set prefix
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.moon/bin:$HOME/.npm-packages/bin:$HOME/.cargo/bin:$PATH:/sbin:$HOME/go/bin:$HOME/.config/emacs/bin:$HOME/.emacs.d/bin:/usr/local/bin:/opt/homebrew/bin:$HOME/.babashka/bbin/bin:$HOME/.lmstudio/bin
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.moon/bin:$HOME/.npm-packages/bin:$HOME/.cargo/bin:$HOME/.opencode/bin:$PATH:/sbin:$HOME/go/bin:$HOME/.config/emacs/bin:$HOME/.emacs.d/bin:/usr/local/bin:/opt/homebrew/bin:$HOME/.babashka/bbin/bin:$HOME/.lmstudio/bin
 export GOPATH=$HOME/go
+export GOMAXPROCS=8
+export GOFLAGS='-p=6'
 if [ -e /Users/ben/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/ben/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export ASPELL_CONF="dict-dir $HOME/.nix-profile/lib/aspell"
 # this gets clobbered by some display manager nix setting?
