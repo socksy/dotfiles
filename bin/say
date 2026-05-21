@@ -10,10 +10,19 @@ if command -v mpv &> /dev/null; then
 else
   MPV='nix run nixpkgs#mpv --'
 fi
+MODEL_DIR=~/models
+MODEL=$MODEL_DIR/en_GB-alba-medium.onnx
+MODEL_CONFIG=$MODEL_DIR/en_GB-alba-medium.onnx.json
+MODEL_URL=https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_GB/alba/medium
+if [ ! -f "$MODEL" ] || [ ! -f "$MODEL_CONFIG" ]; then
+  mkdir -p "$MODEL_DIR"
+  [ ! -f "$MODEL" ] && curl -L --progress-bar -o "$MODEL" "$MODEL_URL/en_GB-alba-medium.onnx"
+  [ ! -f "$MODEL_CONFIG" ] && curl -L --progress-bar -o "$MODEL_CONFIG" "$MODEL_URL/en_GB-alba-medium.onnx.json"
+fi
 if command -v wpctl &> /dev/null; then
   # attempting to see if we can force it to unsuspend by muting and unmuting (or keeping it in mute if that's how the system was before)
   # if, say, a bluetooth device is suspened, then it could take longer for it to unsuspend than to speak a single word
   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 fi
-echo $@ | $PIPER -m ~/models/en_GB-alba-medium.onnx -c ~/models/en_GB-alba-medium.onnx.json --length_scale 0.8 --sentence_silence 0.1 --output-raw -f - 2> /dev/null | $MPV - > /dev/null
+echo $@ | $PIPER -m ~/models/en_GB-alba-medium.onnx -c ~/models/en_GB-alba-medium.onnx.json --length_scale 0.8 --sentence_silence 0.1 --output-raw 2> /dev/null | $MPV --demuxer=rawaudio --demuxer-rawaudio-rate=22050 --demuxer-rawaudio-channels=1 - > /dev/null
 
