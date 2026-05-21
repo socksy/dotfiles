@@ -181,6 +181,7 @@ Simple means few entangled concerns. Easy means familiar right now (Rich Hickey,
 # General Guidelines
 - be concise, and only include comments that say why code exists, not what
 - when writing new code, avoid adding comments unless they explain *why* something exists. Don't remove or rewrite existing comments.
+- before writing a comment, ask: "would this still make sense if someone read it five years from now with no knowledge of this PR?" If the comment singles out one specific parameter or contrasts a new field against a pre-existing one, rewrite it to describe the function/struct as a unified whole — or delete it. PR descriptions are the right home for "what changed and why now"; comments are not.
 - prefer nix commands over system ones where possible. Use uv instead of pip
 - prefer fd over find, rg over grep
 - if there is a `develop` branch in a repo (such as on tower, tower-2, tower-cli, tower-deploy), then it is following git flow, and `develop` is the trunk branch that all other branches are branched from and merged into, with `main` being behind `develop`
@@ -304,3 +305,25 @@ NEVER fetch prod or staging DB credentials directly (no `aws secretsmanager get-
 - `./run-sql.sh [staging|prod] <sql_file> [output_file]` — runs a SQL file against the DB. **Use this for non-interactive queries.** It requires a tunnel already open (run `./prod-db.sh` or `./staging-db.sh` in another terminal first) and handles credentials internally — you don't fetch them yourself.
 - `./prod-redis.sh` / `./staging-redis.sh` — redis clients
 NEVER write to prod. Do not pass `--write` to these scripts under any circumstances. If the user says they have a bastion tunnel open on port 25432, write your query to a `.sql` file and run it with `./run-sql.sh prod query.sql` rather than pulling credentials yourself.
+
+## Code Style
+- Do NOT add backward-looking comments (e.g., 'previously this did X', 'changed from Y'). Comments should describe current behavior only.
+- Do not modify unrelated comments when making changes.
+- Avoid over-explaining historical context in code or commit messages.
+Add as a new ## Scope Discipline section near the top of CLAUDE.md.
+
+## Scope Discipline
+- Implement only what is asked. Do not over-engineer or add conditional logic, fallbacks, or abstractions beyond the stated requirement.
+- Do not edit files outside the scope of the current PR/task (e.g., workspace Cargo.toml, unrelated configs).
+- When unsure whether a change is in scope, ask first.
+Add under a ## Naming Conventions or ## Configuration section.
+
+Unless instructed otherwise, make the minimum change required to satisfy a request. No refactoring, no new abstractions, no fallbacks, no unrelated comment edits. If you think a broader change would be better, propose it as a follow-up but do NOT include it in the first diff.
+
+## Naming Conventions
+- Environment variables for WorkOS follow the `TOWER_WORKOS_*` pattern (e.g., `TOWER_WORKOS_DEFAULT_USER`, not `TOWER_DEFAULT_WORKOS_USER`).
+- Viper auto-prefixes env vars with `TOWER_` — do not double-prefix.
+Add as a ## Privacy section near the top of CLAUDE.md.
+
+## Privacy
+- Never include private Linear ticket IDs (TOW-*) or internal repo references in public PRs, plugins, or open-source artifacts.
