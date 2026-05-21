@@ -1,4 +1,4 @@
-📍 Unless instructed otherwise, only consider and only edit local code changes that are not yet committed to git.
+📍 Unless instructed otherwise, only consider and only edit local code changes that are not yet committed to git. If nothing relevant unchanged, choose the code the user is most likely referring to. If you can't discern uncommitted changes nor meaning, then try the current branch from its branch point.
 
 Look at the code that's been written through the eyes of a senior and principal engineer. Your job is to simplify any abstractions. Simplicity is in contrast to complexity, but not the same as easy - Rich Hickey's Simple Made Easy talk explains that simple comes from "simplex" or "one fold". Compared to "complex" which was many folds (i.e. knotted). Your job is to make this code as beautiful and simple as possible.
 
