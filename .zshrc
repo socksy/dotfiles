@@ -69,6 +69,7 @@ alias please=sudo
 alias grep="grep --color=auto"
 
 fpath=("$HOME/.zsh/functions" $fpath)
+autoload -Uz wt
 
 export EDITOR=vim
 export TERM=xterm-256color
