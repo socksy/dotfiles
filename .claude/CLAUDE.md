@@ -296,7 +296,10 @@ When using Dash0 MCP tools, you MUST always specify the `dataset` parameter as e
 
 # Tower
 In the tower repo sometimes the postgres state might not match what you expect. This is probably because there's multiple cloned tower repos, and `devenv up` was launched from the wrong one. This will NEVER be because of a database hook, which does not exist.
-If you want to run a psql command against the local dev database, use the env var `$TOWER_POSTGRES_URL` to connect with the correct port, username and password.
+If you want to run a psql command, use the env var `$TOWER_POSTGRES_URL` to connect with the correct port, username and password.
+
+# Git
+- NEVER use `git -C` when already in the target directory. Just run `git` directly.
 
 ## Tower prod/staging databases
 NEVER fetch prod or staging DB credentials directly (no `aws secretsmanager get-secret-value` for `postgres.password`, no manual `PGPASSWORD=...` invocations). ALWAYS use the read-only scripts in `/Users/ben/code/tower/tower-db-tools/`:

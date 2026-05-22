@@ -1,0 +1,64 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // "j k": ["workspace::SendKeystrokes", "escape"]
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal && (vim_operator == none || vim_operator == n) && !VimWaiting",
+    "bindings": {
+      "space space": "command_palette::Toggle",
+      "space f s": "workspace::Save",
+      "space p t": "workspace::ToggleLeftDock",
+
+      "space w -": "pane::SplitDown",
+      "space w |": "pane::SplitRight",
+      "space w h": "workspace::ActivatePaneLeft",
+      "space w j": "workspace::ActivatePaneDown",
+      "space w k": "workspace::ActivatePaneUp",
+      "space w l": "workspace::ActivatePaneRight",
+      "space w w": "workspace::ActivateNextPane",
+      "space w c": "pane::CloseActiveItem",
+
+      "space .": "file_finder::Toggle",
+      "space p f": "file_finder::Toggle",
+      "space f f": "workspace::Open",
+      "space f r": "projects::OpenRecent",
+
+      "space /": "pane::DeploySearch",
+      "space s p": "pane::DeploySearch",
+      "space s s": "buffer_search::Deploy",
+
+      "space o t": "terminal_panel::ToggleFocus",
+
+      "space p p": "projects::OpenRecent",
+
+      "space c d": "editor::GoToDefinition",
+      "space c D": "editor::FindAllReferences",
+      "space c r": "editor::Rename",
+      "space c a": "editor::ToggleCodeActions",
+      "space c f": "editor::Format",
+      "space c x": "diagnostics::Deploy",
+      "space c b": "pane::GoBack",
+
+      "space g b": "editor::ToggleGitBlameInline",
+      "space g B": "editor::ToggleGitBlame",
+      "space g L": "editor::OpenPermalinkToLine",
+      "space g l": "editor::CopyPermalinkToLine",
+    },
+  },
+]

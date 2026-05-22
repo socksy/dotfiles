@@ -5,6 +5,7 @@ source ~/bin/.immich-api-key
 latest="$(curl -s -X POST "https://immich.lovell.io/api/search/metadata" -H "x-api-key: ${API_KEY}" -H "Content-Type: application/json" -d '{"make": "Panasonic", "order": "desc", "size": 1}' | jq -r '.assets.items[0].originalFileName')"
 echo "Latest found upload: $latest"
 
+TZ="${2:-Europe/Berlin}"
 DCIM_folder="${1-/Volumes/Untitled/DCIM}"
 echo "cd'ing into $DCIM_folder"
 cd "$DCIM_folder"
@@ -19,7 +20,7 @@ for folder in *_PANA; do
 done
 
 
-immich_upload="immich-go upload from-folder --api-key=${API_KEY} --server=https://immich.lovell.io --skip-verify-ssl"
+immich_upload="immich-go upload from-folder --api-key=${API_KEY} --server=https://immich.lovell.io --skip-verify-ssl --time-zone=${TZ}"
 # special case the latest one since we only want to upload newer
 # photos inside it
 cd "${latest_folder_num}_PANA"
