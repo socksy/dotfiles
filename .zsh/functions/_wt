@@ -1,0 +1,5 @@
+#compdef wt
+
+local -a branches
+branches=(${(f)"$(git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin 2>/dev/null | grep -v '^HEAD$')"})
+_describe 'branch' branches

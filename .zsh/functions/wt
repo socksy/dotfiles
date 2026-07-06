@@ -1,0 +1,33 @@
+emulate -L zsh
+setopt err_return pipe_fail no_unset
+
+local branch="$1"
+git fetch origin "$branch"
+git worktree prune
+
+local src dst
+src=$(git rev-parse --show-toplevel)
+dst="/tmp/$branch"
+
+local existing
+existing=$(git worktree list | grep -F "[$branch]" | tr -s ' ' | cut -d' ' -f1 || true)
+if [ -z "$existing" ] && [ -d "$dst" ]; then
+  existing="$dst"
+fi
+if [ -n "$existing" ]; then
+  echo "warning: already checked out at $existing" >&2
+  cd "$existing"
+  return 0
+fi
+
+mkdir -p "$(dirname "$dst")"
+git worktree add -B "$branch" "$dst" "origin/$branch"
+
+cd "$src"
+find . -type d \( -name node_modules -o -name target -o -name .gocache \) -prune | while read -r nm; do
+  local rel="${nm#./}"
+  mkdir -p "$dst/$(dirname "$rel")"
+  ln -sfn "$src/$rel" "$dst/$rel"
+done
+
+cd "$dst"
