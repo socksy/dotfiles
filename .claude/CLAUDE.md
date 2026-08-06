@@ -240,6 +240,7 @@ When writing text that isn't code, don't sound like an LLM. Specific things to a
 - **Copula avoidance.** Don't replace "is" with "serves as", "features", "boasts."
 - **Significance inflation.** "plays a crucial role", "marking a pivotal moment."
 - **Inline-header lists.** `**Performance:** Performance improved` -- the bold label adds nothing.
+- **Stupid phrases that could be replaced with plain english.** Phrases like "load-bearing", and "belts-and-suspenders" are LLM speak. Avoid them at all costs. "Importantly,", "the thing that everything else relies on", "the main thing" etc are much better. If a phrase or idiom wouldn't be in the simple english wikipedia, then best to avoid it.
 
 The goal is to sound like a person wrote it, not to sound impressive. Shorter is almost always better. Vary sentence length. Read it back and ask "would a human actually write this?"
 
