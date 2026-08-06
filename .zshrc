@@ -178,7 +178,9 @@ alias t1="cd $HOME/code/tower/tower"
 alias t2="cd $HOME/code/tower/tower-2"
 alias td="cd $HOME/code/tower/tower-deploy"
 alias tdb="cd $HOME/code/tower/tower-db-tools"
+alias tc="cd $HOME/code/tower/tower-cli"
 alias grb="git co develop && git pull && git co - && git rebase develop"
+alias gw="gh pr view --web"
 
 jwt-decode() {
   jq -R 'split(".") |.[0:2] | map(gsub("-"; "+") | gsub("_"; "/") | gsub("%3D"; "=") | @base64d) | map(fromjson)' <<< $1
