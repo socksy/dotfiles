@@ -2,11 +2,22 @@ emulate -L zsh
 setopt err_return pipe_fail no_unset
 
 local branch="$1"
+
+# repos that ship their own worktree script (cache symlinks + env seeding
+# + anything repo-specific) delegate to it; this function just cd's
+local src
+src=$(git rev-parse --show-toplevel)
+if [ -x "$src/scripts/wt.sh" ]; then
+  local dst
+  dst=$("$src/scripts/wt.sh" "$branch")
+  cd "$dst"
+  return 0
+fi
+
 git fetch origin "$branch"
 git worktree prune
 
-local src dst
-src=$(git rev-parse --show-toplevel)
+local dst
 dst="/tmp/$branch"
 
 local existing
