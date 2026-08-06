@@ -32,18 +32,18 @@
        :nv :desc "Jump back" "b"  #'dumb-jump-back)
 
       (:prefix ("k" . "smartparens")
-       :nv :desc "Wrap with ()" "w" #'sp-wrap-round
-       :nv :desc "Unwrap with ()" "W" #'sp-unwrap-sexp
-       :nv :desc "Barf" "b" #'sp-forward-barf-sexp
-       :nv :desc "Slurp" "s" #'sp-forward-slurp-sexp
-       :nv :desc "Raise" "r" #'sp-raise-sexp
-       :nv :desc "Transpose" "t" #'sp-transpose-sexp)
+       :desc "Wrap with ()" "w" #'sp-wrap-round
+       :desc "Unwrap with ()" "W" #'sp-unwrap-sexp
+       :desc "Barf" "b" #'sp-forward-barf-sexp
+       :desc "Slurp" "s" #'sp-forward-slurp-sexp
+       :desc "Raise" "r" #'sp-raise-sexp
+       :desc "Transpose" "t" #'sp-transpose-sexp)
 
       (:prefix ("j" . "jump")
-       :nv :desc "Jump to symbol" "i" #'imenu
-       :nv :desc "Jump to symbol across buffers" "I" #'imenu-anywhere
-       :nv :desc "Jump to link" "l" #'ace-link
-       :nv :desc "Avy jump" "j" #'avy-goto-char-timer)
+       :desc "Jump to symbol" "i" #'imenu
+       :desc "Jump to symbol across buffers" "I" #'imenu-anywhere
+       :desc "Jump to link" "l" #'ace-link
+       :desc "Avy jump" "j" #'avy-goto-char-timer)
 
       (:prefix "p"
        :nv :desc "Find file in project" "f" #'projectile-find-file
